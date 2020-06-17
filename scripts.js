@@ -69,7 +69,11 @@ function ArrayToStr(arr) {
 			result += ', ' + arr[i];
 		}
 		if (arr.length-1 > 0) {
-			result += ' and ' + arr[arr.length-1];	
+			if (document.documentElement.lang == 'en-EN') {
+				result += ' and ' + arr[arr.length-1];
+			} else {
+				result += ' и ' + arr[arr.length-1];	
+			}
 		}
 	}
 	return result;
@@ -227,7 +231,11 @@ function GetRadioButton(name) {
 function PrepareTooltip(elem, word) {
 	// DefaultValue (Supported IE)
 	word = (word === undefined) ? false : word;
-	elem.setAttribute('tooltip', (word) ? countWords(elem.textContent) + ' words' : elem.textContent.length + ' characters');			
+	if (document.documentElement.lang == 'en-EN') {
+		elem.setAttribute('tooltip', (word) ? countWords(elem.textContent) + ' words' : elem.textContent.length + ' characters');		
+	} else {
+		elem.setAttribute('tooltip', (word) ? countWords(elem.textContent) + ' слов' : elem.textContent.length + ' символов');	
+	}			
 }
 
 // Set SERP tooltip
@@ -340,6 +348,7 @@ window.addEventListener('resize', function(event){
 	document.getElementsByClassName('app-sidebar')[0].style.cssText = '';
 	document.getElementsByClassName('app-box_overlay')[0].style.cssText = 'display: none;';	
 	document.getElementsByClassName('app-popup')[0].style.cssText = 'display: none;';
+	HideScroll(false);
 })
 
 // Sidebar button click
@@ -357,6 +366,7 @@ document.getElementsByClassName('app-sidebar-toggle')[0].onclick = function() {
 		} 
 	}
 }
+
 // Sidebar mobile button click
 document.getElementsByClassName('app-box-menu')[0].onclick = function() {
 	DisplaySidebar(true);
@@ -457,24 +467,24 @@ setEventByClassName('btn-clear_white', 'onclick', function () { clearInputValue(
 // Code-box navigation 
 setEventByClassName('code-nav-link', 'onclick', function () {
 	if (!checkClass(this, 'active')) {
-		// clear links 
+		// Clear links 
 		var links = document.getElementsByClassName("code-nav-link");
 		for (var i = 0; i < links.length; i++) {
 			removeClass(links[i], 'active');
 		}
-		// active selected link 
+		// Active selected link 
 		addClass(this, 'active');
-		// change buttons attribute 
+		// Change buttons attribute 
 		var button = document.getElementsByClassName("app-popup_copy")[0];
 		button.setAttribute('data-clipboard-target', '#'+ this.getAttribute('data-toggle') +' code')
-		// hide blocks 
+		// Hide blocks 
 		var active_block = document.getElementById(this.getAttribute('data-toggle'));
 		if (!checkClass(active_block, 'active')) {
 			var blocks = document.getElementsByClassName("code-block");
 			for (i = 0; i < blocks.length; i++) {
 				removeClass(blocks[i], 'active');
 			}	
-			// show active block 
+			// Show active block 
 			addClass(active_block, 'active');
 		}
 	}
@@ -494,13 +504,22 @@ document.getElementsByClassName('app-box-clear')[0].onclick = function() {
 	// Disabled button "Get Code"
 	DisabledButton_GetCode();
 	// Show message
-	CreateMsg('Input fields cleared', 'success');
+	if (document.documentElement.lang == 'en-EN') {
+		CreateMsg('Input fields cleared', 'success');
+	} else {
+		CreateMsg('Поля ввода очищены', 'success');	
+	}
 }
 
 // Change tooltips if change radioButton
 setEventByClassName('radio_btns', 'onchange', function () {
 	SetTooltips();
-	CreateMsg('Tooltips changed');
+	// Show message
+	if (document.documentElement.lang == 'en-EN') {
+		CreateMsg('Tooltips changed');
+	} else {
+		CreateMsg('Подсказки изменены');
+	}
 })
 
 // Counting string length
@@ -573,6 +592,23 @@ function Select_MenuItem(item) {
 // Menu item event onclick
 setEventByClassName('app-sidebar-item', 'onclick', function () { Select_MenuItem(this); })
 
+// Click on Generate button
+document.getElementsByClassName('app-box-generator')[0].onclick = function() {
+	GetResults();
+	// Get resulting code
+	GetCode();
+	// Enabled GetCode button
+	DisabledButton_GetCode(false);
+	// Set tooltips
+	SetTooltips();
+	// Show message
+	if (document.documentElement.lang == 'en-EN') {
+		CreateMsg('SERPs generated', 'success');
+	} else {
+		CreateMsg('SERPs сгенерированы', 'success');
+	}
+}
+
 // Output results
 function GetResults() {
 	// Get data
@@ -590,19 +626,33 @@ function GetResults() {
 	// Check data
 	var msg = [];
 	if (final_title.length == 0) {
-		msg.push('<code>Title</code>');
+		if (document.documentElement.lang == 'en-EN') {
+			msg.push('<code>Title</code>');
+		} else {
+			msg.push('<code>Заголовок</code>');	
+		}
 		final_title = document.getElementsByName('default-title')[0].getAttribute('content');
 	}
 	if (final_desc.length == 0) {
-		msg.push('<code>Description</code>');
+		if (document.documentElement.lang == 'en-EN') {
+			msg.push('<code>Description</code>');
+		} else {
+			msg.push('<code>Описание</code>');	
+		}
 		final_desc = document.getElementsByName('default-description')[0].getAttribute('content');
 	}
 	if (final_url.length == 0) {
-		msg.push('<code>Url</code>');
+		msg.push('<code>URL</code>');
 		final_url = document.getElementsByName('default-url')[0].getAttribute('content');
 	}
 	// Show message
-	if (msg.length > 0) { CreateMsg(ArrayToStr(msg) + ' set to default value'); }
+	if (msg.length > 0) {
+		if (document.documentElement.lang == 'en-EN') {
+			CreateMsg(ArrayToStr(msg) + ' set to default value');
+		} else {
+			CreateMsg(ArrayToStr(msg) + ' приняли значение по умолчанию');
+		}
+	}
 	// Set inputs value
 	input_title.value = final_title;
 	input_desc.value = final_desc;
@@ -650,17 +700,10 @@ function GetResults() {
 		document.querySelector(".bing-results .result-desc").innerHTML = ShortenStr(final_desc, 325*4, '14px roboto');
 		document.querySelector(".bing-results .result-link").innerHTML = Wrap_Url(ShortenLink(final_url, 327, '14px roboto'));	
 	}
-	// Get resulting code
-	GetCode();
-	// Enabled GetCode button
-	DisabledButton_GetCode(false);
-	// Set tooltips on SERP
-	SetTooltips();
 }
 
 // Output results
 function GetCode() {
-	// Get data 
 	var final_title = document.getElementById('title').value;
 	var final_desc = document.getElementById('desc').value;
 	var breadcrumb = GetBreadcrumb();
@@ -680,7 +723,7 @@ function GetCode() {
 		// Preparation
 		var final_url = GetUrlArray(document.getElementById('url').value, breadcrumb);
 		breadcrumb.unshift('Home');
-		// JSON-LD block
+		// *** JSON-LD block ***
 		value = '<li><snap class="comment">&lt;!-- Add this code to the &lt;head&gt; element --&gt;</snap></li>';
 		value += '<li><snap class="tag">&lt;script</snap> <snap class="attr-name">type</snap>=<snap class="attr-str">"application/ld+json"</snap><snap class="tag">&gt;</snap></li><li>{</li><li>	<snap class="attr-str">"@context"</snap>: <snap class="attr-str">"https://schema.org"</snap>,</li><li>	<snap class="attr-str">"@type"</snap>: <snap class="attr-str">"BreadcrumbList"</snap>,</li><li>	<snap class="attr-str">"itemListElement"</snap>: [';
 		for (i = 0; i < breadcrumb.length; i++) {
@@ -694,7 +737,7 @@ function GetCode() {
 		// assign the result
 		DisabledButton(code_nav_item[1].children[0], false);
 		document.getElementById('code-block_2').children[0].innerHTML = WrapHtml(value, 'ol');
-		// RDFa block
+		// *** RDFa block ***
 		value = '<li><snap class="comment">&lt;!-- Add this code to the &lt;body&gt; element --&gt;</snap></li>';
 		value += '<li><snap class="tag">&lt;ol</snap> <snap class="attr-name">vocab</snap>=<snap class="attr-str">"https://schema.org/"</snap> <snap class="attr-name">typeof</snap>=<snap class="attr-str">"BreadcrumbList"</snap><snap class="tag">&gt;</snap></li>';
 		for (i = 0; i < breadcrumb.length; i++) {
@@ -710,8 +753,7 @@ function GetCode() {
 		// assign the result
 		DisabledButton(code_nav_item[2].children[0], false);
 		document.getElementById('code-block_3').children[0].innerHTML = WrapHtml(value, 'ol');
-		
-		// HTML block
+		// *** HTML block ***
 		value = '<li><snap class="comment">&lt;!-- Add this code to the &lt;body&gt; element --&gt;</snap></li>';
 		value += '<li><snap class="tag">&lt;ol</snap> <snap class="attr-name">itemscope</snap> <snap class="attr-name">itemtype</snap>=<snap class="attr-str">"https://schema.org/BreadcrumbList"</snap><snap class="tag">&gt;</snap></li>';
 		for (i = 0; i < breadcrumb.length; i++) {
@@ -732,7 +774,6 @@ function GetCode() {
 		document.getElementById('code-block_4').children[0].innerHTML = WrapHtml(value, 'ol');
 	}
 }
-
 
 // Prepared Mobile platform
 if (window.getComputedStyle(document.getElementsByClassName('app-sidebar')[0]).zIndex >= 1100) {
@@ -755,14 +796,34 @@ function ChangePlatform(mobile) {
 }
 
 // If browser = IE9-
-if (document.all) {
-	CreateMsg('Your browser is not supported.', 'warning', 0);
+if (!!window.MSInputMethodContext && !!document.documentMode) {
+	if (document.documentElement.lang == 'en-EN') {
+		CreateMsg('Your browser is not supported', 'warning', 0);
+	} else {
+		CreateMsg('Ваш браузер не поддерживается', 'warning', 0);
+	}
 }
+
+/*@cc_on
+	CreateMsg('Your browser is not supported.', 'warning', 0);
+@*/
 
 /* Instantiate clipboard by passing a string selector */
 var copy_btns = document.querySelectorAll('.app-popup_copy');
 var clipboard = new ClipboardJS(copy_btns);
 
 /* Show message */
-clipboard.on('success', function(e) { CreateMsg('Text copied successfully', 'success'); });
-clipboard.on('error', function(e) { CreateMsg('Error. Text not copied', 'warning'); });
+clipboard.on('success', function(e) {
+	if (document.documentElement.lang == 'en-EN') {
+		CreateMsg('Text copied successfully', 'success');
+	} else {
+		CreateMsg('Текст успешно скопирован', 'success');
+	}
+});
+clipboard.on('error', function(e) {
+	if (document.documentElement.lang == 'en-EN') {
+		CreateMsg('Error. Text not copied', 'warning');
+	} else {
+		CreateMsg('Ошибка. Текст не скопирован', 'warning');
+	}
+});

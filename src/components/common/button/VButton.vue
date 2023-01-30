@@ -1,24 +1,16 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import VLoader from './VLoader.vue'
-import VIcon from './VIcon/VIcon.vue'
+import VLoader from '../icon/VLoader.vue'
+import VIcon from '../icon/VIcon.vue'
 import { RouterLink } from 'vue-router'
-import { getComponentOptions, ComponentState, ComponentOptions } from '../../utils/componentOptions'
-
-type ButtonIconMode = 'prepend' | 'moves'
-type ButtonIcons = {
-  name: string
-  size?: string | number
-  modes?: ButtonIconMode | ButtonIconMode[]
-}
-
-type ButtonOptions = ComponentOptions & { icon?: Omit<ButtonIcons, 'modes'> & { classes?: string[] } }
+import { getComponentOptions, ComponentState } from '../../../utils/componentOptions'
+import { ButtonMode, ButtonIcons, ButtonOptions } from './button.type'
 
 const props = withDefaults(
   defineProps<{
     tag?: 'button' | 'div' | 'a' | 'routerLink'
     type?: 'button' | 'submit' | 'reset'
-    mode?: 'default' | 'primary' | 'secondary' | 'icon'
+    mode?: ButtonMode | ButtonMode[]
     state?: ComponentState
     icon?: string | ButtonIcons
   }>(),
@@ -72,7 +64,7 @@ const options = computed<ButtonOptions>(() => {
 .button {
   $self: &;
 
-  min-height: 38px;
+  min-height: $input-height;
   position: relative;
   font-size: inherit;
   display: inline-flex;
@@ -82,11 +74,12 @@ const options = computed<ButtonOptions>(() => {
   text-decoration: none;
   background-color: transparent;
   border: 1px solid transparent;
-  transition-property: background-color, color, border;
-  transition-duration: $animate--time;
+  transition-property: color, background-color, border-color;
+  transition-duration: $timeout-md;
   border-radius: 24px;
   cursor: pointer;
   user-select: none;
+  padding: 0;
 
   &:active {
     transform: translateY(1px);
@@ -97,24 +90,24 @@ const options = computed<ButtonOptions>(() => {
     left: 50%;
     color: $color--font-85;
     position: absolute;
-    margin: -16px 0 0 -16px;
+    margin: -#{$margin-md} 0 0 -#{$margin-md};
   }
 
   &__icon {
     width: 1em;
     height: 1em;
-    transition-property: color, transform;
-    transition-duration: $animate--time;
+    transition-property: transform;
+    transition-duration: $timeout-sm;
 
     &:not(&--prepend) {
-      @at-root #{$self}:not(#{$self}--icon) & {
-        margin-left: 0.75em;
+      @at-root #{$self}:not(#{$self}--icon):not(#{$self}--circle) & {
+        margin-left: $margin-sm;
       }
     }
 
     &--prepend {
-      @at-root #{$self}:not(#{$self}--icon) & {
-        margin-right: 0.75em;
+      @at-root #{$self}:not(#{$self}--icon):not(#{$self}--circle) & {
+        margin-right: $margin-sm;
         order: -1;
       }
     }
@@ -125,8 +118,8 @@ const options = computed<ButtonOptions>(() => {
       }
 
       @at-root #{$self}:not(#{$self}--icon):hover &,
-      #{$self}:active &,
-      #{$self}:focus-visible & {
+        #{$self}:active &,
+        #{$self}:focus-visible & {
         transform: translate(2px);
       }
     }
@@ -143,7 +136,7 @@ const options = computed<ButtonOptions>(() => {
   }
 
   &:not(&--icon, &--link, &--circle) {
-    padding: 0 20px;
+    padding: 0 $margin-lg;
   }
 
   &--primary {
@@ -167,10 +160,26 @@ const options = computed<ButtonOptions>(() => {
     }
   }
 
+  &--circle {
+    width: 1.5em;
+    height: 1.5em;
+    min-width: 0;
+    min-height: 0;
+    padding: 0.25em;
+
+    #{$self}__icon {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
   &--icon {
-    min-width: 36px;
-    min-height: 36px;
-    font-size: 14px;
+    min-width: $input-field-height;
+    min-height: $input-field-height;
+
+    .icon {
+      font-size: 14px;
+    }
   }
 
   &--link {

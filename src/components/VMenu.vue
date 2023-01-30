@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { RouteLocationRaw } from 'vue-router'
-import VIcon from './common/VIcon/VIcon.vue'
-import VSwitch from './common/VSwitch.vue'
+import VIcon from './common/icon/VIcon.vue'
+import VSwitch from './common/switcher/VSwitcher.vue'
 
 defineProps<{
   list?: { title: string; path: RouteLocationRaw }[]
@@ -25,7 +25,7 @@ const handleChangeTheme = () => {
 
     <v-switch mode="secondary" :icons="['sun', 'moon']" @change="handleChangeTheme" />
 
-    <a href="#" class="menu__link menu__link--rounded ml-20" aria-label="GitHub">
+    <a href="#" class="menu__link menu__link--circle ml-20" aria-label="GitHub">
       <v-icon name="github" />
     </a>
   </div>
@@ -51,8 +51,8 @@ const handleChangeTheme = () => {
   }
 
   &__link {
-    min-width: 38px;
-    min-height: 38px;
+    min-width: $input-height;
+    min-height: $input-height;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -64,8 +64,9 @@ const handleChangeTheme = () => {
       color: $color--white;
     }
 
-    &--rounded {
+    &--circle {
       border-radius: 50%;
+      padding: 4px;
     }
   }
 }

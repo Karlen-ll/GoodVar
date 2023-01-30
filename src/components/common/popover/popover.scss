@@ -1,10 +1,11 @@
-@use '../../styles/resources' as *;
 @use 'sass:map';
 
 $popover-arrow-size: 6px;
 
-.s-popover {
-  @include z-index(dropdown);
+.popover {
+  &__wrapper {
+    z-index: 100;
+  }
 
   &__arrow {
     position: absolute;

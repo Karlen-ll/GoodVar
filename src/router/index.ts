@@ -17,6 +17,11 @@ export const routes = [
         name: routeNames.GENERATOR,
       },
       {
+        path: '/test',
+        component: () => import('../views/TestPage.vue'),
+        name: routeNames.TEST,
+      },
+      {
         path: '/:pathMatch(.*)*',
         component: () => import('../views/NotFoundPage.vue'),
         name: routeNames.NOT_FOUND,

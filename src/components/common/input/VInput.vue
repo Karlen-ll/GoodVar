@@ -1,14 +1,14 @@
 <script setup lang="ts">
-import { ref, computed, useAttrs, defineEmits } from 'vue'
-import { ComponentOptions, ComponentState, getComponentOptions } from '../../utils/componentOptions'
-import VButton from './VButton.vue'
+import { ref, computed, useAttrs, useSlots } from 'vue'
+import { ComponentOptions, ComponentState, getComponentOptions } from '../../../utils/componentOptions'
+import VButton from '../button/VButton.vue'
 
-const DEFAULT_LINE_HEIGHT = 25
+const DEFAULT_LINE_HEIGHT = 24
 const DEFAULT_ROWS = 3
 
 const props = withDefaults(
   defineProps<{
-    modelValue?: string | number
+    modelValue: string | number | undefined
     id?: string
     rows?: string | number | 'auto'
     minRows?: string | number
@@ -19,26 +19,30 @@ const props = withDefaults(
     inputClass?: string
     state?: ComponentState
     nativePlaceholder?: boolean
+    hideSeparator?: boolean
     clearable?: boolean
     blocked?: boolean
   }>(),
   {
     tag: 'input',
     minRows: 1,
+    clearable: true,
   }
 )
 
 const emit = defineEmits<{
-  (e: 'update:modelValue', value: string, isClear?: boolean): void
+  (e: 'update:modelValue', value: string | number, isClear?: boolean): void
   (e: 'clickOnShell', event: Event): void
 }>()
 
 const fieldReference = ref<HTMLInputElement | null>(null)
 const fieldFocus = ref(false)
 const attrs = useAttrs()
+const slots = useSlots()
 
 const isInputField = computed<boolean>(() => props.tag === 'input')
-const isClearable = computed<boolean>(() => !!props.clearable && !options.value.isDisabled && !options.value.isReadonly)
+const hasSeparator = computed<boolean>(() => props.clearable && !!slots.append && !props.hideSeparator)
+const isClearable = computed<boolean>(() => props.clearable && !options.value.isDisabled && !options.value.isReadonly)
 const wrapperClass = computed<string>(() => (attrs.class as string | undefined) ?? '')
 const options = computed<ComponentOptions>(() =>
   getComponentOptions('input', { state: props.state, modes: isInputField.value && 'textarea' })
@@ -102,7 +106,11 @@ const handleClickOnShell = (event: Event) => emit('clickOnShell', event)
 </script>
 
 <template>
-  <div :class="['input', wrapperClass, options.classes]" role="none" @click="handleClickOnShell">
+  <div
+    :class="['input', { 'input--with-placeholder': !nativePlaceholder && placeholder }, wrapperClass, options.classes]"
+    role="none"
+    @click="handleClickOnShell"
+  >
     <div v-if="$slots.prepend" class="input__prepend" role="none">
       <!-- @slot Slot for `prepend` elements -->
       <slot name="prepend" />
@@ -131,19 +139,31 @@ const handleClickOnShell = (event: Event) => emit('clickOnShell', event)
       @focus="fieldFocus = true"
       @focusout="fieldFocus = false"
     />
-    <div v-if="$slots.badge || limit" :class="['input__limit', { 'input__limit--exceeded': modelValue?.length > limit}]">
+    <div
+      v-if="$slots.badge || limit"
+      :class="['input__limit', { 'input__limit--exceeded': modelValue?.length > limit }]"
+    >
       <slot name="badge">
         <span class="input__length">{{ modelValue?.length ?? 0 }}</span> / {{ limit }}
       </slot>
     </div>
-    <div v-if="$slots.prepend || isClearable" class="input__append" role="none">
-      <!-- @slot Slot for `append` elements -->
-      <slot name="append" />
+    <div
+      v-if="$slots.append || isClearable"
+      :class="['input__append', { 'input__append--empty': !$slots.append && !modelValue }]"
+      role="none"
+    >
       <template v-if="isClearable">
         <transition name="fade">
           <v-button v-show="modelValue" mode="icon" icon="close" aria-label="Close" @click.stop="handleInputClear" />
         </transition>
       </template>
+      <!-- @slot Slot for `append` elements -->
+      <div
+        v-if="$slots.append"
+        :class="['input__append-wrapper', { 'input__append-wrapper--has-separator': hasSeparator }]"
+      >
+        <slot name="append" />
+      </div>
     </div>
   </div>
 </template>
@@ -151,9 +171,7 @@ const handleClickOnShell = (event: Event) => emit('clickOnShell', event)
 <style scoped lang="scss">
 @use 'sass:math';
 
-$_padding-x: 7px;
-$_padding-y: 5px;
-$_line-height: 1.5;
+$_offset: $offset * 4;
 
 .input {
   $self: &;
@@ -162,36 +180,40 @@ $_line-height: 1.5;
   position: relative;
   display: inline-flex;
   color: $color--font;
-  line-height: $_line-height;
+  line-height: $input-line-height;
   transition-property: color, border-color, background-color;
-  transition-duration: $animate--time;
+  transition-duration: $timeout-sm;
   border: 1px solid $color--secondary;
   border-radius: 6px;
-  padding: $_padding-y $_padding-x;
+  box-sizing: border-box;
+  padding: $input-padding-y #{$input-padding-x * 0.5} $input-padding-y $input-padding-x;
   letter-spacing: 0;
-  margin: #{$_line-height + em} 0 #{math.div($_line-height, 2) + em};
+
+  &--with-placeholder {
+    margin: #{$margin-lg} 0 #{$margin-sm};
+  }
 
   &__placeholder {
-    top: #{$_padding-x + 1px};
-    left: #{$_padding-y + 4px};
-    height: 1em;
+    top: #{$input-padding-y};
+    left: #{$input-padding-x};
+    height: $input-field-height;
     position: absolute;
     white-space: nowrap;
     transition-property: color, border-color, background-color, transform;
-    transition-duration: $animate--time;
+    transition-duration: $timeout-sm;
     transition-timing-function: linear;
     pointer-events: none;
     user-select: none;
     z-index: 1;
 
     &--raised {
-      $_offset: $_padding-y + 2px;
-      transform: translateY(calc((-100% * #{$_line-height} - #{$_offset})));
+      $_offset: #{$input-padding-y + $_offset};
+      transform: translateY(calc((-100% - #{$input-padding-y})));
     }
   }
 
   &__field {
-    min-height: #{$_line-height + em};
+    min-height: #{$input-line-height + em};
     width: 100%;
     border: none;
     color: inherit;
@@ -201,13 +223,14 @@ $_line-height: 1.5;
     line-height: inherit;
     background-color: transparent;
     resize: vertical;
+    padding: 0;
 
     &:focus {
       outline: none;
     }
 
     &::placeholder {
-      color: $color--primary-35;
+      color: $color--font-35;
     }
 
     &::-webkit-search-cancel-button {
@@ -258,8 +281,30 @@ $_line-height: 1.5;
     }
   }
 
-  &__prepend,
+  &__append-wrapper {
+    &--has-separator {
+      border-left: 1px solid $color--secondary;
+      padding-left: 10px;
+      margin-left: 10px;
+    }
+  }
+
+  &__prepend {
+    margin-right: $margin-xs;
+  }
+
   &__append {
+    &:not(&--empty) {
+      margin-left: $margin-xs;
+    }
+  }
+
+  &__prepend,
+  &__append,
+  &__append-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     position: relative;
   }
 

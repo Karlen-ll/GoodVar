@@ -12,7 +12,7 @@ const hasFooterDivider = computed(() => props.divider && props.divider !== 'head
     <header v-if="$slots.header" :class="['card__header', { 'card__header--with-divider': hasHeaderDivider }]">
       <slot name="header" />
     </header>
-    <div v-if="$slots.body" :class="['card__body']">
+    <div v-if="$slots.default" :class="['card__body']">
       <slot />
     </div>
     <footer v-if="$slots.footer" :class="['card__footer', { 'card__footer--with-divider': hasFooterDivider }]">
@@ -29,7 +29,7 @@ const hasFooterDivider = computed(() => props.divider && props.divider !== 'head
 
   border-radius: 24px;
   box-shadow: $shadow;
-  background: $color--white;
+  //background: $color--white;
 
   &__header {
     padding: #{$offset * 2} $offset math.div($offset, 2);

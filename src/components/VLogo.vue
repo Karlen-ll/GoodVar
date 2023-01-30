@@ -24,7 +24,7 @@ import { routeNames } from '../router/routes'
     display: grid;
     align-items: center;
     color: $color--font-85;
-    margin-left: 0.75em;
+    margin-left: $margin-sm;
   }
 }
 </style>

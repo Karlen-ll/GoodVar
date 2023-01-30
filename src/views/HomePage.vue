@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import VButton from '../components/common/VButton.vue'
+import VButton from '../components/common/button/VButton.vue'
 import { routeNames } from '../router/routes'
 </script>
 
@@ -37,7 +37,7 @@ import { routeNames } from '../router/routes'
     color: $color--font-85;
     transition: color 0.5s;
     font-size: 22px;
-    margin: 24px 0 40px;
+    margin: $margin-md 0 $margin-lg;
   }
 }
 </style>

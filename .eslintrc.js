@@ -26,6 +26,7 @@ module.exports = {
     'no-useless-constructor': 'off',
     'linebreak-style': ['error', 'unix'],
     'object-curly-spacing': ['error', 'always', { objectsInObjects: true }],
+    'no-irregular-whitespace': 'off',
 
     'max-len': [
       'error',

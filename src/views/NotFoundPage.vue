@@ -9,7 +9,7 @@ useMeta({ title: 'GoodVar - 404: Page not Found!' })
   <div class="container container--center page">
     <h1 class="page__header"> Page not found </h1>
     <div class="page__description">
-      The page you were looking for could not be found.<br>
+      The page you were looking for could not be found.<br />
       It might have been removed, renamed, or did not exist in the first place.
     </div>
 

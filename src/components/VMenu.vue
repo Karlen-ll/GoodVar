@@ -2,14 +2,16 @@
 import { RouteLocationRaw } from 'vue-router'
 import VIcon from './common/icon/VIcon.vue'
 import VSwitch from './common/switcher/VSwitcher.vue'
+import { useTheme } from '../composable/useTheme'
+
+const { toggleTheme } = useTheme()
 
 defineProps<{
   list?: { title: string; path: RouteLocationRaw }[]
 }>()
 
 const handleChangeTheme = () => {
-  const addOrRemove = document.documentElement.classList.contains('dark') ? 'remove' : 'add'
-  document.documentElement.classList[addOrRemove]('dark')
+  toggleTheme()
 }
 </script>
 
@@ -61,7 +63,7 @@ const handleChangeTheme = () => {
     padding: 4px 8px;
 
     @include hover {
-      color: $color--white;
+      color: $color--font;
     }
 
     &--circle {

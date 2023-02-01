@@ -22,7 +22,7 @@ import { routeNames } from '../router/routes'
   text-align: center;
 
   &__header {
-    background: -webkit-linear-gradient(315deg, $color--primary 15%, $color--primary-accent);
+    background: -webkit-linear-gradient(315deg, $color--brand 15%, $color--brand-accent);
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;

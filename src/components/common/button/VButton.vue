@@ -10,9 +10,10 @@ const props = withDefaults(
   defineProps<{
     tag?: 'button' | 'div' | 'a' | 'routerLink'
     type?: 'button' | 'submit' | 'reset'
-    mode?: ButtonMode | ButtonMode[]
+    mode?: ButtonMode
     state?: ComponentState
     icon?: string | ButtonIcons
+    circle?: boolean
   }>(),
   {
     tag: 'button',
@@ -46,7 +47,7 @@ const options = computed<ButtonOptions>(() => {
   <component
     :is="tag === 'routerLink' ? RouterLink : tag"
     :type="type"
-    :class="['button', options.classes]"
+    :class="['button', { 'button--circle': circle }, options.classes]"
     :disabled="options.isDisabled || options.isLoading"
   >
     <v-loader v-if="options.isLoading" class="button__loader" />
@@ -140,23 +141,23 @@ const options = computed<ButtonOptions>(() => {
   }
 
   &--primary {
-    border: 1px solid $color--primary;
+    border: 1px solid $color--brand;
     color: $color--white;
-    background-color: $color--primary;
+    background-color: $color--brand;
 
     @include hover-and-not-disabled(#{$self}--disabled) {
-      border: 1px solid $color--primary-accent;
-      background-color: $color--primary-accent;
+      border: 1px solid $color--brand-accent;
+      background-color: $color--brand-accent;
     }
   }
 
   &--secondary {
-    border: 1px solid $color--secondary;
+    border: 1px solid $color--border;
     color: $color--font-85;
 
     @include hover-and-not-disabled(#{$self}--disabled) {
-      color: $color--primary-accent;
-      border: 1px solid $color--primary-accent;
+      color: $color--brand-accent;
+      border: 1px solid $color--brand-accent;
     }
   }
 
@@ -189,10 +190,10 @@ const options = computed<ButtonOptions>(() => {
 
   &--icon,
   &--link {
-    color: $color--primary;
+    color: $color--brand;
 
     @include hover-and-not-disabled(#{$self}--disabled) {
-      color: $color--primary-accent;
+      color: $color--brand-accent;
     }
   }
 }

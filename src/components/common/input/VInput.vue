@@ -183,7 +183,7 @@ $_offset: $offset * 4;
   line-height: $input-line-height;
   transition-property: color, border-color, background-color;
   transition-duration: $timeout-sm;
-  border: 1px solid $color--secondary;
+  border: 1px solid $color--border;
   border-radius: 6px;
   box-sizing: border-box;
   padding: $input-padding-y #{$input-padding-x * 0.5} $input-padding-y $input-padding-x;
@@ -241,7 +241,7 @@ $_offset: $offset * 4;
     &:-webkit-autofill:hover,
     &:-webkit-autofill:focus,
     &:-webkit-autofill:active {
-      -webkit-box-shadow: 0 0 0 30px $color--white inset;
+      -webkit-box-shadow: 0 0 0 10px $color--shadow inset;
     }
 
     &[type='number']::-webkit-outer-spin-button,
@@ -283,7 +283,7 @@ $_offset: $offset * 4;
 
   &__append-wrapper {
     &--has-separator {
-      border-left: 1px solid $color--secondary;
+      border-left: 1px solid $color--border;
       padding-left: 10px;
       margin-left: 10px;
     }
@@ -310,7 +310,7 @@ $_offset: $offset * 4;
 
   &:not(&--readonly):not(&--disabled):not(&--error) {
     &:focus-within {
-      border-color: $color--primary;
+      border-color: $color--brand;
     }
   }
 

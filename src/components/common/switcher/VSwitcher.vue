@@ -162,6 +162,8 @@ const handleValueChange = (event: InputEvent): void => {
   }
 
   &--big {
+    align-items: center;
+
     #{$self}__wrapper {
       font-size: 2em;
     }
@@ -182,10 +184,16 @@ const handleValueChange = (event: InputEvent): void => {
       &__input {
         @include hover-and-not-disabled(#{$self}--disabled) {
           ~ #{$self}__wrapper {
-            border: 1px solid $color--primary-accent;
+            border: 1px solid $color--brand-accent;
           }
         }
       }
+    }
+  }
+
+  &--radio {
+    #{$self}__wrapper {
+      margin-top: -0.15em;
     }
   }
 
@@ -195,7 +203,7 @@ const handleValueChange = (event: InputEvent): void => {
     #{$self} {
       &__wrapper {
         width: 1.8em;
-        border: 1px solid $color--secondary;
+        border: 1px solid $color--border;
         padding: 1px;
         margin-top: -0.15em;
       }
@@ -232,7 +240,7 @@ const handleValueChange = (event: InputEvent): void => {
 
         @include hover-and-not-disabled(#{$self}--disabled) {
           ~ #{$self}__wrapper {
-            border: 1px solid $color--primary-accent;
+            border: 1px solid $color--brand-accent;
           }
         }
       }

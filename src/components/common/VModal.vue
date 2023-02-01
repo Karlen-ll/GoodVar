@@ -6,17 +6,10 @@ import VIcon from './icon/VIcon.vue'
 const props = withDefaults(
   defineProps<{
     modelValue: boolean
-    width: number | string
-    maxWidth: number | string
-    closable: boolean
-    closeOnEsc: boolean
-    closeOnBackdrop: boolean
+    closable?: boolean
   }>(),
   {
-    maxWidth: 400,
     closable: true,
-    closeOnEsc: true,
-    closeOnBackdrop: true,
   }
 )
 
@@ -24,67 +17,44 @@ const emit = defineEmits<{
   (e: 'update:modelValue', value: boolean): void
 }>()
 
-const slots = useSlots()
-
-const modalInnerStyle = computed(() => getStyleSizeByProps(props, ['width', 'maxWidth']))
-
-const modalClasses = computed(() => ({
-  'modal--without-header': !slots.header,
-  'modal--without-body': !slots.default,
-  'modal--without-footer': !slots.footer,
-  'modal--closable': props.closable,
-}))
-
 watch(
   () => props.modelValue,
-  (isOpen) => {
-    document.body.style.overflow = isOpen ? 'hidden' : 'auto'
-  }
+  (isOpen) => (document.body.style.overflow = isOpen ? 'hidden' : 'auto')
 )
 
 onMounted(() => {
-  if (props.closeOnEsc) {
-    document.addEventListener('keydown', closeByEscape)
-  }
+  document.addEventListener('keydown', closeFromKeyboard)
 })
 
 onUnmounted(() => {
-  if (props.closeOnEsc) {
-    document.removeEventListener('keydown', closeByEscape)
-  }
+  document.removeEventListener('keydown', closeFromKeyboard)
 })
 
-const handleCloseModal = () => {
-  emit('update:modelValue', false)
-}
-
-const closeByBackdrop = () => {
-  if (props.closeOnBackdrop) {
-    handleCloseModal()
-  }
-}
-
-const closeByEscape = (event: KeyboardEvent) => {
+const closeFromKeyboard = (event: KeyboardEvent) => {
   if (event.key === 'Escape' && props.modelValue) {
     handleCloseModal()
   }
+}
+
+const handleCloseModal = () => {
+  emit('update:modelValue', false)
 }
 </script>
 
 <template>
   <transition name="modal">
-    <section v-if="modelValue" :class="['modal', modalClasses]" role="dialog">
-      <div class="modal__inner" :style="modalInnerStyle" role="none">
+    <section v-if="modelValue" class="modal" role="dialog">
+      <div v-if="modelValue" class="modal__content" role="none">
         <div
           v-if="closable"
-          class="modal__close"
-          aria-label="Close"
+          class="modal__close-button"
+          aria-label="Close modal"
           role="button"
           tabindex="0"
           @click="handleCloseModal"
           @keyup.enter.space="handleCloseModal"
         >
-          <v-icon class="modal__close-icon" size="24" name="close" :tabindex="0" role="none" />
+          <v-icon class="modal__close-icon" size="24" name="close" />
         </div>
         <header v-if="$slots.header" class="modal__header">
           <slot name="header" />
@@ -96,7 +66,7 @@ const closeByEscape = (event: KeyboardEvent) => {
           <slot name="footer" />
         </footer>
       </div>
-      <div class="modal__backdrop" :aria-hidden="true" @click="closeByBackdrop" />
+      <div v-if="modelValue" class="modal__backdrop" :aria-hidden="true" @click="handleCloseModal" />
     </section>
   </transition>
 </template>
@@ -104,14 +74,32 @@ const closeByEscape = (event: KeyboardEvent) => {
 <style scoped lang="scss">
 @use 'sass:map';
 
-.modal-enter-active,
-.modal-leave-active {
-  transition: opacity 0.5s ease;
-}
+.modal {
+  &-enter-active,
+  &-leave-active {
+    transition: opacity 0.5s ease;
 
-.modal-enter-from,
-.modal-leave-to {
-  opacity: 0;
+    .modal__content {
+      transition: transform 0.35s ease-in-out;
+    }
+  }
+
+  &-enter-from,
+  &-leave-to {
+    opacity: 0;
+  }
+
+  &-enter-from {
+    .modal__content {
+      transform: translateY(-2em);
+    }
+  }
+
+  &-leave-to {
+    .modal__content {
+      transform: translateY(0);
+    }
+  }
 }
 
 .modal {
@@ -127,17 +115,18 @@ const closeByEscape = (event: KeyboardEvent) => {
   justify-content: center;
   padding-top: 64px;
 
-  &__inner {
+  &__content {
     z-index: 1;
-
     width: 100%;
+    max-width: 800px;
+    min-height: 246px;
     max-height: 100%;
     position: relative;
     display: flex;
     flex-direction: column;
     border-radius: 24px;
     box-shadow: $shadow;
-    background: $color--white;
+    background: $color--background;
     overflow: hidden;
 
     //@include responsive(xs) {
@@ -174,7 +163,7 @@ const closeByEscape = (event: KeyboardEvent) => {
     //}
   }
 
-  &__close {
+  &__close-button {
     $close-button-size: 24px;
 
     top: 22px;
@@ -182,7 +171,7 @@ const closeByEscape = (event: KeyboardEvent) => {
     width: $close-button-size;
     height: $close-button-size;
     position: absolute;
-    color: $color--primary-65;
+    color: $color--brand-65;
     transition: color $timeout-md;
     z-index: 1;
 
@@ -191,7 +180,7 @@ const closeByEscape = (event: KeyboardEvent) => {
     }
 
     @include hover {
-      color: $color--primary;
+      color: $color--brand;
     }
   }
 

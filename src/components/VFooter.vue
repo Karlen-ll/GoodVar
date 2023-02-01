@@ -15,7 +15,7 @@
   color: $color--font-65;
   justify-content: space-between;
   transition: border-color 0.5s, color 0.5s;
-  border-top: 1px solid rgba($color--border, 0.5);
+  border-top: 1px solid $color--border;
   padding: 0.74em 2em;
 }
 </style>

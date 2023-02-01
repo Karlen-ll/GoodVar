@@ -40,7 +40,11 @@ const handleUpdate = (value: string, index: number) => {
 }
 
 const handleRemove = (index: number) => {
-  const result = [...props.modelValue!]
+  if (props.modelValue?.length <= 1) {
+    return
+  }
+
+  const result = [...props.modelValue]
   result.splice(index, 1)
 
   emit('update:modelValue', result)
@@ -53,8 +57,9 @@ const handleRemove = (index: number) => {
 
     <v-button
       class="input-group__add-button"
-      :mode="['secondary', 'circle']"
+      mode="secondary"
       icon="plus"
+      circle
       :aria-label="`Add ${placeholder}`"
       :state="modelValue.length >= max ? 'disabled' : undefined"
       @click="handleAdd"

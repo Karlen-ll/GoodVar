@@ -1,7 +1,5 @@
 <script setup lang="ts">
-import { reactive, ref } from 'vue'
-import VPopover from '../components/common/popover/VPopover'
-// import SBadge from '../components/SBadge'
+import { reactive } from 'vue'
 
 const data = reactive({
   hint: null,
@@ -10,10 +8,7 @@ const data = reactive({
 
 <template>
   <div class="container container--center page">
-    <v-popover>
-        xxx
-      <template #content> Контент </template>
-    </v-popover>
+    <div class="tooltip" data-tooltip="xxx"> Контент </div>
   </div>
 </template>
 

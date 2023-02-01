@@ -1,18 +1,46 @@
 @use 'sass:map';
 
 :root {
+  --color-brand: #1677ff;
+  --color-brand-accent: #4096ff;
+  --color-brand-65: rgba(22,119,255, 0.65);
+  --color-brand-35: rgba(22,119,255, 0.35);
+  --color-danger: #ff5964;
+
   font-family: 'Inter', 'Avenir', 'Helvetica', 'Arial', sans-serif;
   font-size: 16px;
   line-height: 1.5;
   font-weight: 400;
   color-scheme: light dark;
-  color: rgb(255 255 255 / 0.87);
-  background-color: #242424;
+  color: $color--font;
+  background-color: $color--background;
   font-synthesis: none;
   text-rendering: optimizelegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
+}
+
+.dark {
+  --color-font: #e5e5e5;
+  --color-font-85: rgba(229, 229, 229, 0.85);
+  --color-font-65: rgba(229, 229, 229, 0.65);
+  --color-font-35: rgba(229, 229, 229, 0.35);
+  --color-shadow: rgba(255,255,255, 0.12);
+  --color-scrollbar: #424242;
+  --color-border: #545454;
+  --color-background: #242424;
+}
+
+.light {
+  --color-font: #1a1a1a;
+  --color-font-85: rgba(26,26,26, 0.85);
+  --color-font-65: rgba(26,26,26, 0.65);
+  --color-font-35: rgba(26,26,26, 0.35);
+  --color-shadow: rgba(0,0,0, 0.12);
+  --color-scrollbar: #424242;
+  --color-border: #545454;
+  --color-background: #f7f7f7;
 }
 
 html {
@@ -85,7 +113,7 @@ pre {
 
 mark,
 code {
-  background-color: #f3f6f9;
+  background-color: $color--shadow;
   border-radius: 0.28em;
   word-wrap: break-word;
   padding: 0.15em 0.4em;
@@ -93,14 +121,14 @@ code {
 
 mark {
   color: inherit;
-  background-color: #f2faff;
+  background-color: $color--shadow;
 }
 
 a {
   font-weight: 500;
   text-decoration: inherit;
 
-  @include link($color--primary, $color--primary-accent);
+  @include link($color--brand, $color--brand-accent);
 }
 
 #app {
@@ -130,18 +158,27 @@ a {
 .button-group {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
 
   &:not(&--right) {
-    .button:not(:last-child) {
-      margin-right: $margin-md;
+    > .button,
+    > .switcher,
+    > .switcher-group {
+      &:not(:last-child) {
+        margin-right: $margin-md;
+      }
     }
   }
 
   &--right {
     justify-content: end;
 
-    .button:not(:first-child) {
-      margin-left: $margin-md;
+    > .button,
+    > .switcher,
+    > .switcher-group {
+      &:not(:first-child) {
+        margin-left: $margin-md;
+      }
     }
   }
 
@@ -258,17 +295,14 @@ a {
 
 /** ↓↓↓ Media */
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #fff;
-  }
-
-  a:hover {
-    color: #747bff;
-  }
-
-  button {
-    background-color: #f9f9f9;
-  }
-}
+//@media (prefers-color-scheme: dark) {
+//  :root {
+//    --color-font: #e5e5e5;
+//    --color-font-85: rgba(229, 229, 229, 0.85);
+//    --color-font-65: rgba(229, 229, 229, 0.65);
+//    --color-font-35: rgba(229, 229, 229, 0.35);
+//    --color-shadow: rgba(255,255,255, 0.12);
+//    --color-scrollbar: #424242;
+//    --color-background: #242424;
+//  }
+//}

@@ -3,6 +3,8 @@ export type SerpMenu = {
   hideOnMobile?: boolean
 }
 
+export type SerpCompany = 'google' | 'microsoft' | 'yandex'
+
 export type SerpMenus = (string | SerpMenu)[]
 
 export type SerpLogo = {
@@ -18,3 +20,5 @@ export type SerpData = {
   breadcrumbs?: string[]
   protocol?: 'http' | 'https'
 }
+
+export type SearchEngineValue = { site: SerpData, isMobile: boolean, company: SerpCompany }

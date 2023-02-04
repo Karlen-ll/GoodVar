@@ -1,14 +1,17 @@
 <script setup lang="ts">
+import { ref } from 'vue'
 import { RouteLocationRaw } from 'vue-router'
 import VIcon from './common/icon/VIcon.vue'
 import VSwitch from './common/switcher/VSwitcher.vue'
 import { useTheme } from '../composable/useTheme'
 
-const { toggleTheme } = useTheme()
+const { isDark, toggleTheme } = useTheme()
 
 defineProps<{
   list?: { title: string; path: RouteLocationRaw }[]
 }>()
+
+const switchValue = ref(isDark.value)
 
 const handleChangeTheme = () => {
   toggleTheme()
@@ -25,9 +28,9 @@ const handleChangeTheme = () => {
 
     <hr class="vertical" />
 
-    <v-switch mode="secondary" :icons="['sun', 'moon']" @change="handleChangeTheme" />
+    <v-switch v-model="switchValue" class="menu__switch menu__switch--theme" mode="secondary" :icons="['sun', 'moon']" @change="handleChangeTheme" />
 
-    <a href="#" class="menu__link menu__link--circle ml-20" aria-label="GitHub">
+    <a href="#" class="menu__link menu__link--circle ml-lg" aria-label="GitHub">
       <v-icon name="github" />
     </a>
   </div>
@@ -58,9 +61,9 @@ const handleChangeTheme = () => {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    color: $color--font-65;
+    color: $color--font-85;
     box-sizing: border-box;
-    padding: 4px 8px;
+    padding: 0.25rem 0.5rem;
 
     @include hover {
       color: $color--font;
@@ -68,7 +71,7 @@ const handleChangeTheme = () => {
 
     &--circle {
       border-radius: 50%;
-      padding: 4px;
+      padding: 0.25rem;
     }
   }
 }

@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { computed, onMounted, onUnmounted, watch, useSlots } from 'vue'
-import { getStyleSizeByProps } from '../../utils/size'
+import { watch, onMounted, onUnmounted } from 'vue'
 import VIcon from './icon/VIcon.vue'
 
 const props = withDefaults(
@@ -75,34 +74,6 @@ const handleCloseModal = () => {
 @use 'sass:map';
 
 .modal {
-  &-enter-active,
-  &-leave-active {
-    transition: opacity 0.5s ease;
-
-    .modal__content {
-      transition: transform 0.35s ease-in-out;
-    }
-  }
-
-  &-enter-from,
-  &-leave-to {
-    opacity: 0;
-  }
-
-  &-enter-from {
-    .modal__content {
-      transform: translateY(-2em);
-    }
-  }
-
-  &-leave-to {
-    .modal__content {
-      transform: translateY(0);
-    }
-  }
-}
-
-.modal {
   z-index: 200;
 
   top: 0;
@@ -113,66 +84,56 @@ const handleCloseModal = () => {
   display: flex;
   align-items: flex-start;
   justify-content: center;
-  padding-top: 64px;
 
   &__content {
     z-index: 1;
-    width: 100%;
+    top: 50%;
+    left: 50%;
+    width: 95%;
     max-width: 800px;
     min-height: 246px;
-    max-height: 100%;
-    position: relative;
+    max-height: 80%;
+    position: absolute;
     display: flex;
     flex-direction: column;
-    border-radius: 24px;
+    border-radius: $border-radius-md;
     box-shadow: $shadow;
     background: $color--background;
+    transform: translate(-50%, -65%);
     overflow: hidden;
-
-    //@include responsive(xs) {
-    //  border-radius: 24px 24px 0 0;
-    //}
   }
 
+
   &__header {
-    padding-top: 32px;
-    padding-right: 32px;
-    padding-left: 32px;
-    margin-bottom: 16px;
+    border-bottom: 1px solid $color--border;
+    padding: 1.15rem 1.25rem 1rem 1.75rem;
+    margin-bottom: 1em;
   }
 
   &__body {
+    flex: 1;
     width: 100%;
     height: 100%;
-    max-height: 100vh;
+    box-sizing: border-box;
     position: relative;
-    padding-right: 32px;
-    padding-left: 32px;
+    padding: 0 1.75rem;
     overflow-y: auto;
   }
 
   &__footer {
     display: unset;
-    padding-right: 32px;
-    padding-bottom: 32px;
-    padding-left: 32px;
-    margin-top: 16px;
-
-    //@include responsive(xs) {
-    //  padding-bottom: 28px;
-    //}
+    border-top: 1px solid $color--border;
+    padding: 1.25rem 1.25rem 1.5rem 1.75rem;
+    margin-top: 1em;
   }
 
   &__close-button {
-    $close-button-size: 24px;
-
-    top: 22px;
-    right: 22px;
-    width: $close-button-size;
-    height: $close-button-size;
+    top: 1.15rem;
+    right: 1.25rem;
     position: absolute;
     color: $color--brand-65;
     transition: color $timeout-md;
+    cursor: pointer;
     z-index: 1;
 
     &-icon {
@@ -190,42 +151,29 @@ const handleCloseModal = () => {
     width: 100%;
     height: 100%;
     position: absolute;
-    background: $color--font-35;
+    background: $color--overlay;
+    background-size: 21px 21px;
+    backdrop-filter: blur(0.1rem);
   }
+}
 
-  &--without-header {
-    .modal__body {
-      padding-top: 32px;
+.modal {
+  &-enter-active,
+  &-leave-active {
+    transition: opacity 0.5s ease;
+
+    .modal__content {
+      transition: transform 0.35s ease-in-out;
     }
   }
 
-  &--without-footer {
-    .modal__body {
-      padding-bottom: 32px;
+  &-leave-to,
+  &-enter-from {
+    opacity: 0;
 
-      //@include responsive(xs) {
-      //  padding-bottom: 28px;
-      //}
+    .modal__content {
+      transform: translate(-50%, -60%);
     }
   }
-
-  &--closable {
-    .modal__header {
-      margin-top: 12px;
-    }
-
-    &.modal--without-header {
-      .modal__body {
-        margin-top: 12px;
-      }
-    }
-  }
-
-  //@include responsive(xs) {
-  //  width: 100% !important; // stylelint-disable-line declaration-no-important
-  //  max-width: 100% !important; // stylelint-disable-line declaration-no-important
-  //  align-items: flex-end;
-  //  padding-top: 12px;
-  //}
 }
 </style>

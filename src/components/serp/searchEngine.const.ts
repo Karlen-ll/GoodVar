@@ -1,6 +1,6 @@
-import { SerpLogo, SerpMenus } from './searchEngine.type'
+import { SerpOptions } from './searchEngine.type'
 
-export const SERP_MAP: Record<'google' | 'microsoft' | 'yandex', { logo: SerpLogo; name: string; menu: SerpMenus }> = {
+export const SERP_MAP: Record<'google' | 'microsoft' | 'yandex', SerpOptions> = {
   google: {
     logo: { name: 'google', width: 160, height: 53 },
     name: 'Google',
@@ -15,6 +15,7 @@ export const SERP_MAP: Record<'google' | 'microsoft' | 'yandex', { logo: SerpLog
       { label: 'Settings', hideOnMobile: true },
     ],
   },
+
   microsoft: {
     logo: { name: 'bing', width: 160, height: 53 },
     name: 'Microsoft Bing',
@@ -26,6 +27,7 @@ export const SERP_MAP: Record<'google' | 'microsoft' | 'yandex', { logo: SerpLog
       'News',
     ],
   },
+
   yandex: {
     logo: { name: 'yandex', width: 160, height: 53 },
     name: 'Yandex',

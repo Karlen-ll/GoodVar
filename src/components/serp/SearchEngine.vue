@@ -1,26 +1,24 @@
 <script setup lang="ts">
-import SearchResult from './common/SearchResult.vue'
-import SearchMenu from './common/SearchMenu.vue'
-import SearchBar from './common/SearchBar.vue'
-import { SearchEngineValue } from './searchEngine.type'
+import SerpResult from './common/SerpResult.vue'
+import SerpHeader from './common/SerpHeader.vue'
+import { SerpData } from './searchEngine.type'
 import { SERP_MAP } from './searchEngine.const'
+import { computed } from 'vue'
 
 defineProps<{
-  data: SearchEngineValue
+  data: SerpData
 }>()
 </script>
 
 <template>
-  <section :class="['serp', `serp--${data.company}`, { 'serp--mobile': data.isMobile }]">
-    <header class="serp__header">
-      <search-bar class="serp__search-bar" :logo="SERP_MAP[data.company].logo" />
-      <search-menu class="serp__menu" :items="SERP_MAP[data.company].menu" />
-    </header>
+  <section :class="['serp', `serp--${data.company}`, { [`serp--${data.mode}`]: data.mode }]">
+    <serp-header class="serp__header" :options="SERP_MAP[data.company]" />
+
     <div class="serp__list" role="none">
       <p class="serp__description" role="presentation">Sample of {{ SERP_MAP[data.company].name }} search engine result</p>
 
-      <search-result
-        v-bind="data.site"
+      <serp-result
+        v-bind="data"
         class="serp__item"
         :aria-label="`Result of ${SERP_MAP[data.company].name} search engine`"
       />
@@ -37,8 +35,6 @@ defineProps<{
   overflow: auto;
 
   &__header {
-    display: flex;
-    flex-direction: column;
     min-width: 745px;
     max-width: 820px;
 
@@ -48,7 +44,7 @@ defineProps<{
   }
 
   &__description {
-    color: #b5b5c3;
+    color: $color--font-35;
     line-height: 30px;
     font-size: 0.85rem;
   }

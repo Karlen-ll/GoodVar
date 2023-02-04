@@ -1,14 +1,14 @@
 <script setup lang="ts">
-import { reactive } from 'vue'
+import { ref } from 'vue'
+import VSwitcher from '../components/common/switcher/VSwitcher.vue'
 
-const data = reactive({
-  hint: null,
-})
+const model = ref()
 </script>
 
 <template>
   <div class="container container--center page">
-    <div class="tooltip" data-tooltip="xxx"> Контент </div>
+    <v-switcher v-model="model" type="tab" checked-value="1" label="META" />
+    <v-switcher v-model="model" type="tab" checked-value="2" label="JSON-LD" />
   </div>
 </template>
 

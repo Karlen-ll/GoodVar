@@ -37,7 +37,7 @@ import { routeNames } from '../router/routes'
     color: $color--font-85;
     transition: color 0.5s;
     font-size: 22px;
-    margin: $margin-md 0 $margin-lg;
+    margin: $offset-md 0 $offset-lg;
   }
 }
 </style>

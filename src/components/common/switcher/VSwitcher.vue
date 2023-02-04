@@ -18,6 +18,7 @@ const props = withDefaults(
     icons?: [SpriteName, SpriteName]
     checked?: boolean
     multiple?: boolean
+    presentation?: boolean
   }>(),
   {
     modelValue: undefined,
@@ -86,6 +87,7 @@ const handleValueChange = (event: InputEvent): void => {
       class="switcher__input visually-hidden"
       :type="TYPE_MAP[type]"
       :checked="isChecked"
+      :tabindex="presentation ? -1 : undefined"
       :disabled="options.isDisabled"
       :readonly="options.isReadonly"
       @change="handleValueChange"
@@ -131,6 +133,7 @@ const handleValueChange = (event: InputEvent): void => {
     align-items: center;
     justify-content: center;
     border-radius: inherit;
+    text-align: center;
     transition: transform $timeout-md, background-color $timeout-md, color $timeout-md;
   }
 
@@ -158,14 +161,14 @@ const handleValueChange = (event: InputEvent): void => {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-left: $margin-sm;
+    margin-left: $offset-sm;
   }
 
   &--big {
     align-items: center;
 
     #{$self}__wrapper {
-      font-size: 2em;
+      font-size: 1.5em;
     }
   }
 
@@ -192,8 +195,14 @@ const handleValueChange = (event: InputEvent): void => {
   }
 
   &--radio {
-    #{$self}__wrapper {
-      margin-top: -0.15em;
+    #{$self} {
+      &__wrapper {
+        margin-top: -0.15em;
+      }
+
+      &__text {
+        margin-left: $offset-xs;
+      }
     }
   }
 
@@ -204,6 +213,7 @@ const handleValueChange = (event: InputEvent): void => {
       &__wrapper {
         width: 1.8em;
         border: 1px solid $color--border;
+        background-color: $color--obscure-bg;
         padding: 1px;
         margin-top: -0.15em;
       }
@@ -211,14 +221,8 @@ const handleValueChange = (event: InputEvent): void => {
       &__inner {
         width: 1em;
         height: inherit;
-        flex-shrink: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: inherit;
-        text-align: center;
-        background-color: #1a1a1a;
-        color: #fff;
+        color: $color--black;
+        background-color: $color--white;
         transition: transform $timeout-md, background-color $timeout-md, color $timeout-md;
 
         > #{$self}__icon {
@@ -230,7 +234,7 @@ const handleValueChange = (event: InputEvent): void => {
       &__input {
         &:checked {
           ~ #{$self}__wrapper {
-            background-color: #242424;
+            background-color: $color--brand;
 
             #{$self}__inner {
               transform: translateX(0.8em);
@@ -246,7 +250,59 @@ const handleValueChange = (event: InputEvent): void => {
       }
 
       &__text {
-        margin-left: $margin-sm + 0.1em;
+        margin-left: $offset-sm + 0.1em;
+      }
+    }
+
+    &#{$self}--big {
+      #{$self}__inner {
+        width: 0.8em;
+        height: 0.8em;
+        margin: 0.1em 0.1em 0;
+      }
+    }
+  }
+
+  &--tab {
+    margin: 0;
+
+    #{$self} {
+      &__wrapper {
+        top: 100%;
+        width: 100%;
+        height: auto;
+        border-bottom: 2px solid transparent;
+        transition: border-color $timeout-md;
+        position: absolute;
+      }
+
+      &__inner {
+        display: none;
+      }
+
+      &__input {
+        &:checked {
+          ~ #{$self} {
+            &__wrapper {
+              border-bottom-color: $color--brand;
+            }
+
+            &__text {
+              color: $color--brand;
+            }
+          }
+        }
+
+        @include hover-and-not-disabled(#{$self}--disabled) {
+          ~ #{$self}__wrapper {
+            border-bottom-color: $color--brand-accent;
+          }
+        }
+      }
+
+      &__text {
+        margin: 0;
+        padding: 0.5em 0.25em;
       }
     }
   }

@@ -1,4 +1,4 @@
-import { readonly, ref } from 'vue'
+import { computed, readonly, ref } from 'vue'
 
 type ColorScheme = 'dark' | 'light'
 
@@ -31,7 +31,10 @@ export function useTheme() {
     localStorage.setItem('theme', theme.value);
   }
 
+  const isDark = computed(() => theme.value === 'dark')
+
   return {
+    isDark,
     theme: readonly(theme),
     toggleTheme,
   }

@@ -4,17 +4,17 @@ import VSwitcher from '../common/switcher/VSwitcher.vue'
 import InputGroup from '../common/input/InputGroup.vue'
 import SwitcherGroup from '../common/switcher/SwitcherGroup.vue'
 import { SwitchGroupItem } from '../common/switcher/switcher.type'
-import { SearchEngineValue } from './searchEngine.type'
+import { SerpData } from './searchEngine.type'
 
 defineProps<{
-  modelValue: SearchEngineValue
+  modelValue: SerpData
   companies: SwitchGroupItem[]
 }>()
 </script>
 
 <template>
   <section class="form">
-    <header>
+    <header class="mb-xl">
       <h1>SERPs Snippet Generator</h1>
       <p class="form__description">
         Enter your <mark>title</mark>, <mark>description</mark> and <mark>web address</mark> to see your website's Search
@@ -24,29 +24,28 @@ defineProps<{
 
     <div class="grid">
       <div role="none">
-        <v-input id="title" v-model="modelValue.site.title" tag="textarea" :limit="70" placeholder="Title" rows="1" />
-        <v-input id="description" v-model="modelValue.site.desc" tag="textarea" placeholder="Description" :limit="180" rows="3" />
-        <p class="form__input-desc" style="line-height: 1.4">
+        <v-input id="title" v-model="modelValue.title" tag="textarea" :limit="70" placeholder="Title" rows="1" />
+        <v-input id="description" v-model="modelValue.desc" tag="textarea" placeholder="Description" :limit="180" rows="3" />
+        <p class="form__input-description" style="line-height: 1.4">
           You can add special characters and emoticons from
           <a href="https://unicode-table.com/sets/" target="_blank">unicode&nbsp;table</a>.
         </p>
-        <v-input id="webAddress" v-model="modelValue.site.url" placeholder="Web address (primary mirror)" />
+        <v-input id="webAddress" v-model="modelValue.url" placeholder="Web address (primary mirror)" />
       </div>
       <div role="none">
-        <input-group v-model="modelValue.site.breadcrumbs" legend="JSON-LD Breadcrumbs" placeholder="Breadcrumb" />
+        <input-group v-model="modelValue.breadcrumbs" legend="JSON-LD Breadcrumbs" placeholder="Breadcrumb" />
       </div>
     </div>
 
-    <div class="button-group mt-16">
+    <div class="button-group mt-lg">
       <switcher-group
         v-model="modelValue.company"
         :items="companies"
-        type="radio"
         label="Select search engine"
-        checked-value="google"
+        type="radio"
+        border
       />
-
-      <v-switcher v-model="modelValue.isMobile" mode="big" label="Mobile version" />
+      <v-switcher v-model="modelValue.mode" mode="big" label="Mobile version" checked-value="mobile" />
     </div>
   </section>
 </template>
@@ -55,11 +54,12 @@ defineProps<{
 .form {
   &__description {
     color: $color--font-85;
-    margin: $margin-xs 0 $margin-sm;
+    margin: $offset-xs 0 $offset-sm;
   }
 
-  &__input-desc {
+  &__input-description {
     line-height: 1.4;
+    margin-top: 0;
   }
 }
 </style>

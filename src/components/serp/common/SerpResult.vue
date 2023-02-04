@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue'
+import { SerpCompany, SerpMode } from '../searchEngine.type'
 
 const props = defineProps<{
   title?: string
@@ -7,6 +8,8 @@ const props = defineProps<{
   url?: string
   breadcrumbs?: string[]
   protocol?: 'http' | 'https'
+  company?: SerpCompany
+  mode?: SerpMode
 }>()
 
 const webUrl = computed(() => {
@@ -29,10 +32,10 @@ const tooltip = computed(() => {
 </script>
 
 <template>
-  <article class="web-card" aria-label="result of google">
+  <article :class="['serp', `serp--${company}`, { [`serp--${mode}`]: mode }]" aria-label="result of google">
     <!-- @slot Slot for `prepend` elements -->
     <slot name="prepend" />
-    <cite v-if="url" class="web-card__breadcrumbs breadcrumbs tooltip" :data-tooltip="tooltip.url" tabindex="0">
+    <cite v-if="url" class="serp__breadcrumbs breadcrumbs tooltip" :data-tooltip="tooltip.url" tabindex="0">
       <a class="breadcrumbs__url">{{ webUrl }}</a>
       <template v-for="breadcrumb in breadcrumbs" :key="breadcrumb">
         <span class="breadcrumbs__separator">›</span>
@@ -41,10 +44,10 @@ const tooltip = computed(() => {
     </cite>
     <!-- @slot Slot for `title` & `description` elements -->
     <slot>
-      <h3 class="web-card__title tooltip" :data-tooltip="tooltip.title" tabindex="0">
+      <h3 class="serp__title tooltip" :data-tooltip="tooltip.title" tabindex="0">
         <a tabindex="-1" aria-hidden="true">{{ title }}</a>
       </h3>
-      <span class="web-card__desc tooltip" :data-tooltip="tooltip.desc" tabindex="0">
+      <span class="serp__desc tooltip" :data-tooltip="tooltip.desc" tabindex="0">
         {{ desc }}
       </span>
     </slot>
@@ -52,7 +55,7 @@ const tooltip = computed(() => {
 </template>
 
 <style scoped lang="scss">
-.web-card {
+.serp {
   &__breadcrumbs {
     position: relative;
   }

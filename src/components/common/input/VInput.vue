@@ -184,13 +184,13 @@ $_offset: $offset * 4;
   transition-property: color, border-color, background-color;
   transition-duration: $timeout-sm;
   border: 1px solid $color--border;
-  border-radius: 6px;
+  border-radius: $border-radius-sm;
   box-sizing: border-box;
   padding: $input-padding-y #{$input-padding-x * 0.5} $input-padding-y $input-padding-x;
   letter-spacing: 0;
 
   &--with-placeholder {
-    margin: #{$margin-lg} 0 #{$margin-sm};
+    margin: #{$offset-lg} 0 #{$offset-sm};
   }
 
   &__placeholder {
@@ -290,12 +290,12 @@ $_offset: $offset * 4;
   }
 
   &__prepend {
-    margin-right: $margin-xs;
+    margin-right: $offset-xs;
   }
 
   &__append {
     &:not(&--empty) {
-      margin-left: $margin-xs;
+      margin-left: $offset-xs;
     }
   }
 

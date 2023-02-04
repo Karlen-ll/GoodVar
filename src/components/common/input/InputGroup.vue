@@ -26,7 +26,10 @@ const handleAdd = () => {
 
   nextTick(() => {
     const inputs = fieldsetReference.value!.querySelectorAll('input')
-    inputs[props.modelValue.length - 1].focus()
+
+    if (inputs && props.modelValue.length) {
+      inputs[props.modelValue.length - 1].focus()
+    }
   })
 }
 
@@ -53,17 +56,18 @@ const handleRemove = (index: number) => {
 
 <template>
   <fieldset ref="fieldsetReference" class="input-group">
-    <legend class="input-group__title">{{ legend }}</legend>
+    <legend class="input-group__title mb-xs">{{ legend }}</legend>
 
-    <v-button
-      class="input-group__add-button"
-      mode="secondary"
-      icon="plus"
-      circle
-      :aria-label="`Add ${placeholder}`"
-      :state="modelValue.length >= max ? 'disabled' : undefined"
-      @click="handleAdd"
-    />
+    <div class="input-group__buttons">
+      <v-button
+        mode="secondary"
+        icon="plus"
+        circle
+        :aria-label="`Add ${placeholder}`"
+        :state="modelValue.length >= max ? 'disabled' : undefined"
+        @click="handleAdd"
+      />
+    </div>
 
     <TransitionGroup name="list" tag="ul" class="input-group__list">
       <li v-for="(item, index) in modelValue" :key="index" class="input-group__item">
@@ -111,17 +115,18 @@ const handleRemove = (index: number) => {
     height: $input-field-height;
     color: $color--danger;
     padding: 0;
-    margin: #{$margin-lg + $input-padding-y} 0 0 $margin-xs;
+    margin: #{$offset-lg + $input-padding-y} 0 0 $offset-xs;
 
     @include hover() {
       color: #ff2344;
     }
   }
 
-  &__add-button {
+  &__buttons {
     right: 0;
     bottom: 100%;
     position: absolute;
+    transform: translateY(-0.5em);
   }
 }
 
@@ -134,7 +139,7 @@ const handleRemove = (index: number) => {
   &-enter-from,
   &-leave-to {
     opacity: 0;
-    transform: scaleX(0);
+    transform: translateY(-40%) scaleX(0);
   }
 }
 </style>

@@ -2,7 +2,7 @@
 const props = withDefaults(
   defineProps<{
     value: (string | [string, string])[][]
-    lang: number | string
+    lang?: number | string
   }>(),
   {
     lang: 'html',

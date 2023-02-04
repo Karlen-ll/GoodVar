@@ -77,7 +77,7 @@ const options = computed<ButtonOptions>(() => {
   border: 1px solid transparent;
   transition-property: color, background-color, border-color;
   transition-duration: $timeout-md;
-  border-radius: 24px;
+  border-radius: $border-radius-lg;
   cursor: pointer;
   user-select: none;
   padding: 0;
@@ -91,7 +91,7 @@ const options = computed<ButtonOptions>(() => {
     left: 50%;
     color: $color--font-85;
     position: absolute;
-    margin: -#{$margin-md} 0 0 -#{$margin-md};
+    margin: -#{$offset-md} 0 0 -#{$offset-md};
   }
 
   &__icon {
@@ -102,13 +102,13 @@ const options = computed<ButtonOptions>(() => {
 
     &:not(&--prepend) {
       @at-root #{$self}:not(#{$self}--icon):not(#{$self}--circle) & {
-        margin-left: $margin-sm;
+        margin-left: $offset-sm;
       }
     }
 
     &--prepend {
       @at-root #{$self}:not(#{$self}--icon):not(#{$self}--circle) & {
-        margin-right: $margin-sm;
+        margin-right: $offset-sm;
         order: -1;
       }
     }
@@ -137,7 +137,7 @@ const options = computed<ButtonOptions>(() => {
   }
 
   &:not(&--icon, &--link, &--circle) {
-    padding: 0 $margin-lg;
+    padding: 0 $offset-lg;
   }
 
   &--primary {

@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import VInput from '../common/input/VInput.vue'
-import VSwitcher from '../common/switcher/VSwitcher.vue'
-import InputGroup from '../common/input/InputGroup.vue'
-import SwitcherGroup from '../common/switcher/SwitcherGroup.vue'
-import { SwitchGroupItem } from '../common/switcher/switcher.type'
-import { SerpData } from './searchEngine.type'
+import VInput from '@atom/input/VInput.vue'
+import VSwitcher from '@atom/switcher/VSwitcher.vue'
+import InputGroup from '@atom/input/InputGroup.vue'
+import SwitcherGroup from '@atom/switcher/SwitcherGroup.vue'
+import { SwitchGroupItem } from '@atom/switcher/switcher.type'
+import { SerpData } from '@serp/searchEngine.type'
 
 defineProps<{
   modelValue: SerpData

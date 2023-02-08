@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { SerpCompany, SerpMode } from '../searchEngine.type'
+import { SerpCompany, SerpMode } from '@serp/searchEngine.type'
 
 const props = defineProps<{
   title?: string

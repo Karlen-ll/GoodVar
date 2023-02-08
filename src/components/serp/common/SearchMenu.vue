@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { SerpMenuItem, SerpMenu } from '../searchEngine.type'
-import SwitcherGroup from '../../common/switcher/SwitcherGroup.vue'
+import { SerpMenuItem, SerpMenu } from '@serp/searchEngine.type'
+import SwitcherGroup from '@atom/switcher/SwitcherGroup.vue'
 
 const props = withDefaults(
   defineProps<{

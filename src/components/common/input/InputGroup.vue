@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, nextTick } from 'vue'
-import VInput from './VInput.vue'
-import VButton from '../button/VButton.vue'
+import VInput from '@atom/input/VInput.vue'
+import VButton from '@atom/button/VButton.vue'
 
 const props = withDefaults(
   defineProps<{

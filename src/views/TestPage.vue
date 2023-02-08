@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import VSwitcher from '../components/common/switcher/VSwitcher.vue'
+import VSwitcher from '@atom/switcher/VSwitcher.vue'
 
 const model = ref()
 </script>

@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import VSwitcher from './VSwitcher.vue'
-import { SerpMenuItem } from '../../serp/searchEngine.type'
-import { SwitchType, SwitchValue, SwitchGroupItem } from './switcher.type'
+import VSwitcher from '@atom/switcher/VSwitcher.vue'
+import { SerpMenuItem } from '@serp/searchEngine.type'
+import { SwitchType, SwitchValue, SwitchGroupItem } from '@atom/switcher/switcher.type'
 
 type NormalSwitchGroupItem = Omit<SerpMenuItem, 'checkedValue'> & { checkedValue: SwitchValue }
 

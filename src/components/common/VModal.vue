@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { watch, onMounted, onUnmounted } from 'vue'
-import VIcon from './icon/VIcon.vue'
+import VIcon from '@atom/icon/VIcon.vue'
 
 const props = withDefaults(
   defineProps<{

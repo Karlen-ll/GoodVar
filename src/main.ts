@@ -1,9 +1,9 @@
 import { createApp } from 'vue'
 import { createRouter, createWebHistory } from 'vue-router'
 import { createMetaManager, defaultConfig } from 'vue-meta'
-import { routes } from './router'
-import App from './App.vue'
-import './styles/index.scss'
+import { routes } from '@/router'
+import App from '@/App.vue'
+import '@/styles/index.scss'
 
 const metaManager = createMetaManager(false, {
   ...defaultConfig,

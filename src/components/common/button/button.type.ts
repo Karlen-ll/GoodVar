@@ -1,4 +1,4 @@
-import { ComponentOptions } from '../../../utils/componentOptions'
+import { ComponentOptions } from '@/utils/componentOptions'
 
 export type ButtonMode = 'default' | 'primary' | 'secondary' | 'icon'
 

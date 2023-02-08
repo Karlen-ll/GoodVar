@@ -1,6 +1,6 @@
 <script setup>
-import LogoSvg from '../assets/logo.svg'
-import { routeNames } from '../router/routes'
+import LogoSvg from '@/assets/logo.svg'
+import { routeNames } from '@/router/routes'
 </script>
 
 <template>

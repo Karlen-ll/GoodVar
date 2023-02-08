@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import VMenu from '../components/VMenu.vue'
-import VLogo from '../components/VLogo.vue'
-import { routeNames } from '../router/routes'
+import VMenu from '@/components/VMenu.vue'
+import VLogo from '@/components/VLogo.vue'
+import { routeNames } from '@/router/routes'
 
 const MENU_ITEMS = [{ title: 'Generator', path: { name: routeNames.GENERATOR } }]
 </script>

@@ -1,5 +1,5 @@
-import { ComponentState } from '../../../utils/componentOptions'
-import { SpriteName } from '../icon/icon.type'
+import { ComponentState } from '@/utils/componentOptions'
+import { SpriteName } from '@atom/icon/icon.type'
 
 export type SwitchType = 'checkbox' | 'radio' | 'toggle' | 'tab'
 

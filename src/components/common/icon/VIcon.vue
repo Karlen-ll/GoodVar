@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { IconName, IconNames, RichIconType, SpriteName } from './icon.type'
+import { IconName, IconNames, RichIconType, SpriteName } from '@atom/icon/icon.type'
 
 const props = withDefaults(
   defineProps<{

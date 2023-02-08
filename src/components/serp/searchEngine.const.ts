@@ -1,4 +1,4 @@
-import { SerpOptions } from './searchEngine.type'
+import { SerpOptions } from '@serp/searchEngine.type'
 
 export const SERP_MAP: Record<'google' | 'microsoft' | 'yandex', SerpOptions> = {
   google: {

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useMeta } from 'vue-meta'
-import { routeNames } from '../router/routes'
+import { routeNames } from '@/router/routes'
 
 useMeta({ title: 'GoodVar - 404: Page not Found!' })
 </script>
@@ -13,7 +13,7 @@ useMeta({ title: 'GoodVar - 404: Page not Found!' })
       It might have been removed, renamed, or did not exist in the first place.
     </div>
 
-    <router-link class="error-page__link" :to="{ name: routeNames.HOME }"> Вернуться на главную </router-link>
+    <router-link class="error-page__link" :to="{ name: routeNames.HOME }"> Go back </router-link>
   </div>
 </template>
 

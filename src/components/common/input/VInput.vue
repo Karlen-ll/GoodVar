@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, computed, useAttrs, useSlots } from 'vue'
-import { ComponentOptions, ComponentState, getComponentOptions } from '../../../utils/componentOptions'
-import VButton from '../button/VButton.vue'
+import { ComponentOptions, ComponentState, getComponentOptions } from '@/utils/componentOptions'
+import VButton from '@atom/button/VButton.vue'
 
 const DEFAULT_LINE_HEIGHT = 24
 const DEFAULT_ROWS = 3

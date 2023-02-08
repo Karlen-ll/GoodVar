@@ -1,5 +1,5 @@
-import { SpriteName } from '../icon/icon.type'
-import { SwitchType } from './switcher.type'
+import { SpriteName } from '@atom/icon/icon.type'
+import { SwitchType } from '@atom/switcher/switcher.type'
 
 export const TYPE_MAP: Record<SwitchType, 'checkbox' | 'radio'> = {
   checkbox: 'checkbox',

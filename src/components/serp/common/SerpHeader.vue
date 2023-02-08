@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import SwitcherGroup from '../../common/switcher/SwitcherGroup.vue'
-import VButton from '../../common/button/VButton.vue'
-import VInput from '../../common/input/VInput.vue'
-import VIcon from '../../common/icon/VIcon.vue'
-import { IconName } from '../../common/icon/icon.type'
-import { SerpMenuItem, SerpOptions } from '../searchEngine.type'
+import VIcon from '@atom/icon/VIcon.vue'
+import VInput from '@atom/input/VInput.vue'
+import VButton from '@atom/button/VButton.vue'
+import SwitcherGroup from '@atom/switcher/SwitcherGroup.vue'
+import { SerpMenuItem, SerpOptions } from '@serp/searchEngine.type'
+import { IconName } from '@atom/icon/icon.type'
 
 const props = withDefaults(defineProps<{
     modelValue?: string

@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import VLoader from '../icon/VLoader.vue'
-import VIcon from '../icon/VIcon.vue'
+import VLoader from '@atom/icon/VLoader.vue'
+import VIcon from '@atom/icon/VIcon.vue'
 import { RouterLink } from 'vue-router'
-import { getComponentOptions, ComponentState } from '../../../utils/componentOptions'
-import { ButtonMode, ButtonIcons, ButtonOptions } from './button.type'
+import { getComponentOptions, ComponentState } from '@/utils/componentOptions'
+import { ButtonMode, ButtonIcons, ButtonOptions } from '@atom/button/button.type'
 
 const props = withDefaults(
   defineProps<{

@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { ref, reactive } from 'vue'
-import SwitcherGroup from '../components/common/switcher/SwitcherGroup.vue'
-import GeneratorForm from '../components/serp/GeneratorForm.vue'
-import SearchEngine from '../components/serp/SearchEngine.vue'
-import VButton from '../components/common/button/VButton.vue'
-import CodeFrame from '../components/common/CodeFrame.vue'
-import VModal from '../components/common/VModal.vue'
-import { SerpData } from '../components/serp/searchEngine.type'
+import SwitcherGroup from '@atom/switcher/SwitcherGroup.vue'
+import GeneratorForm from '@serp/GeneratorForm.vue'
+import SearchEngine from '@serp/SearchEngine.vue'
+import VButton from '@atom/button/VButton.vue'
+import CodeFrame from '@atom/CodeFrame.vue'
+import VModal from '@atom/VModal.vue'
+import { SerpData } from '@serp/searchEngine.type'
 
 const modalTab = ref<string>('meta')
 const isModalShown = ref<boolean>(false)

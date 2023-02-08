@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
-import { toggleArrayElement } from '../../../utils'
-import { ICON_MAP, TYPE_MAP } from './switcher.const'
-import { getComponentOptions, ComponentOptions, ComponentState } from '../../../utils/componentOptions'
-import { SwitchType, SwitchValue } from './switcher.type'
-import { SpriteName } from '../icon/icon.type'
-import VIcon from '../icon/VIcon.vue'
+import { toggleArrayElement } from '@/utils'
+import { ICON_MAP, TYPE_MAP } from '@atom/switcher/switcher.const'
+import { getComponentOptions, ComponentOptions, ComponentState } from '@/utils/componentOptions'
+import { SwitchType, SwitchValue } from '@atom/switcher/switcher.type'
+import { SpriteName } from '@atom/icon/icon.type'
+import VIcon from '.@atom/icon/VIcon.vue'
 
 const props = withDefaults(
   defineProps<{

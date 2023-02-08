@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { RouteLocationRaw } from 'vue-router'
-import VIcon from './common/icon/VIcon.vue'
-import VSwitch from './common/switcher/VSwitcher.vue'
-import { useTheme } from '../composable/useTheme'
+import { useTheme } from '@/composable/useTheme'
+import VIcon from '@atom/icon/VIcon.vue'
+import VSwitch from '@atom/switcher/VSwitcher.vue'
 
 const { isDark, toggleTheme } = useTheme()
 

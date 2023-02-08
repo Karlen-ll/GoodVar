@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import VButton from '../components/common/button/VButton.vue'
-import { routeNames } from '../router/routes'
+import VButton from '@atom/button/VButton.vue'
+import { routeNames } from '@/router/routes'
 </script>
 
 <template>

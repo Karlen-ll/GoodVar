@@ -1,9 +1,8 @@
 <script setup lang="ts">
-import SerpResult from './common/SerpResult.vue'
-import SerpHeader from './common/SerpHeader.vue'
-import { SerpData } from './searchEngine.type'
-import { SERP_MAP } from './searchEngine.const'
-import { computed } from 'vue'
+import SerpResult from '@serp/common/SerpResult.vue'
+import SerpHeader from '@serp/common/SerpHeader.vue'
+import { SerpData } from '@serp/searchEngine.type'
+import { SERP_MAP } from '@serp/searchEngine.const'
 
 defineProps<{
   data: SerpData

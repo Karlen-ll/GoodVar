@@ -60,7 +60,7 @@ const props = withDefaults(
   &__item {
     list-style: none;
 
-    &:before {
+    &::before {
       left: 0;
       width: 1.8rem;
       line-height: 1.5;

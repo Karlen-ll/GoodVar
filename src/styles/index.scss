@@ -1,8 +1,8 @@
 :root {
   --color-brand: #1677ff;
   --color-brand-accent: #4096ff;
-  --color-brand-65: rgba(22, 119, 255, 0.65);
-  --color-brand-35: rgba(22, 119, 255, 0.35);
+  --color-brand-65: rgb(22 119 255 / 0.65);
+  --color-brand-35: rgb(22 119 255 / 0.35);
   --color-danger: #ff5964;
 
   font-family: 'Inter', 'Avenir', 'Helvetica', 'Arial', sans-serif;
@@ -21,30 +21,30 @@
 
 .dark {
   --color-font: #e5e5e5;
-  --color-font-85: rgba(229, 229, 229, 0.85);
-  --color-font-65: rgba(229, 229, 229, 0.65);
-  --color-font-35: rgba(229, 229, 229, 0.35);
-  --color-shadow: rgba(255, 255, 255, 0.12);
+  --color-font-85: rgb(229 229 229 / 0.85);
+  --color-font-65: rgb(229 229 229 / 0.65);
+  --color-font-35: rgb(229 229 229 / 0.35);
+  --color-shadow: rgb(255 255 255 / 0.12);
   --color-scrollbar: #424242;
   --color-border: #545454;
   --color-background: #242424;
   --color-accent-bg: #2c2c2c;
   --color-obscure-bg: #4c4d4f;
-  --color-overlay: rgba(60, 60, 60, 0.6);
+  --color-overlay: rgb(60 60 60 / 0.6);
 }
 
 .light {
   --color-font: #1a1a1a;
-  --color-font-85: rgba(26, 26, 26, 0.85);
-  --color-font-65: rgba(26, 26, 26, 0.65);
-  --color-font-35: rgba(26, 26, 26, 0.35);
-  --color-shadow: rgba(0, 0, 0, 0.12);
+  --color-font-85: rgb(26 26 26 / 0.85);
+  --color-font-65: rgb(26 26 26 / 0.65);
+  --color-font-35: rgb(26 26 26 / 0.35);
+  --color-shadow: rgb(0 0 0 / 0.12);
   --color-scrollbar: #424242;
-  --color-border: #cccccc;
+  --color-border: #ccc;
   --color-background: #f7f7f7;
-  --color-accent-bg: #ffffff;
+  --color-accent-bg: #fff;
   --color-obscure-bg: #dcdfe6;
-  --color-overlay: rgba(36, 36, 36, 0.6);
+  --color-overlay: rgb(36 36 36 / 0.6);
 }
 
 html {
@@ -109,12 +109,12 @@ hr {
 code,
 kbd,
 samp {
-  font-family: monospace, monospace;
+  font-family: monospace, sans-serif;
   font-size: 0.85em;
 }
 
 pre {
-  font-family: monospace, monospace;
+  font-family: monospace, sans-serif;
   font-size: 1em;
   overflow: auto;
 }
@@ -206,6 +206,21 @@ a {
       margin-right: $offset-md;
     }
   }
+
+  // Vue animations
+  &-enter-active {
+    transition: opacity $timeout-lg ease, transform $timeout-lg ease;
+  }
+
+  &-leave-active {
+    transition: opacity $timeout-md ease, transform $timeout-md ease;
+  }
+
+  &-enter-from,
+  &-leave-to {
+    opacity: 0;
+    transform: translateX(1em);
+  }
 }
 
 .grid {
@@ -223,14 +238,17 @@ a {
 @each $size-prefix, $size in (0: 0, xs: 0.5, sm: 0.75, md: 1, lg: 1.5, xl: 2) {
   @each $direction-prefix, $direction in ('': '', t: -top, r: -right, l: -left, b: -bottom) {
     .m#{$direction-prefix}-#{$size-prefix} {
-      @if ($size == 0) {
+      @if  $size == 0 {
         margin#{$direction}: #{$size};
       } @else {
         margin#{$direction}: #{$size + rem};
       }
     }
 
-    @if ($size >= 1) and ($size < 2) {
+    $min: $size >= 1;
+    $max: $size < 2;
+
+    @if $min and $max {
       .m#{$direction-prefix}-#{$size-prefix}-n {
         margin#{$direction}: -#{$size + rem};
       }
@@ -280,22 +298,6 @@ a {
   &-enter-from,
   &-leave-to {
     opacity: 0;
-  }
-}
-
-.list {
-  &-enter-active {
-    transition: opacity $timeout-lg ease, transform $timeout-lg ease;
-  }
-
-  &-leave-active {
-    transition: opacity $timeout-md ease, transform $timeout-md ease;
-  }
-
-  &-enter-from,
-  &-leave-to {
-    opacity: 0;
-    transform: translateX(1em);
   }
 }
 

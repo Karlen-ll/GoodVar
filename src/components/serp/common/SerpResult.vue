@@ -61,10 +61,10 @@ const tooltip = computed(() => {
   }
 
   &__title {
-    font-weight: normal;
+    font-weight: 400;
     white-space: nowrap;
-    padding: 4px 0 0 0;
-    margin: 0 0 4px 0;
+    padding: 4px 0 0;
+    margin: 0 0 4px;
   }
 
   &__desc {
@@ -74,7 +74,7 @@ const tooltip = computed(() => {
 
     > em {
       color: #565656;
-      font-weight: bold;
+      font-weight: 700;
       font-style: normal;
     }
   }
@@ -102,8 +102,8 @@ const tooltip = computed(() => {
 .tooltip {
   position: relative;
 
-  &:before,
-  &:after {
+  &::before,
+  &::after {
     top: auto;
     left: 0;
     right: auto;
@@ -114,12 +114,13 @@ const tooltip = computed(() => {
     user-select: none;
     pointer-events: none;
     transform: translateY(-0.5em);
+    animation: tooltip-anim 300ms ease-out forwards;
     position: absolute;
     display: none;
     opacity: 0;
   }
 
-  &:before {
+  &::before {
     content: '';
     bottom: 100%;
     border: 5px solid transparent;
@@ -128,10 +129,10 @@ const tooltip = computed(() => {
     z-index: 1001;
   }
 
-  &:after {
+  &::after {
     content: attr(data-tooltip);
     bottom: calc(100% + 5px);
-    font-family: monospace, monospace;
+    font-family: monospace, sans-serif;
     text-align: center;
     min-width: 3em;
     max-width: 21em;
@@ -151,7 +152,6 @@ const tooltip = computed(() => {
     &::before,
     &::after {
       display: block;
-      animation: tooltip-anim 300ms ease-out forwards !important;
       opacity: 1;
     }
   }

@@ -13,7 +13,7 @@ const props = defineProps<{
 
 const options = computed<SearchEngineOptions>(() => {
   const result: SearchEngineOptions = {
-    ...SERP_MAP[props.data.company]
+    ...SERP_MAP[props.data.company],
   }
 
   if (props.data.mode !== 'mobile') {

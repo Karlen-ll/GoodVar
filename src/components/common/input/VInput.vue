@@ -212,6 +212,7 @@ $_offset: $offset * 4;
 
     &--raised {
       $_offset: #{$input-padding-y + $_offset};
+
       transform: translateY(calc((-100% - #{$input-padding-y})));
     }
   }
@@ -323,7 +324,7 @@ $_offset: $offset * 4;
     position: relative;
   }
 
-  &:not(&--readonly):not(&--disabled):not(&--error) {
+  &:not(&--readonly, &--disabled, &--error) {
     @include hover-within {
       border-color: $color--brand;
     }

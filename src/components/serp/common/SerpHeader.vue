@@ -163,7 +163,7 @@ const handleSearch = () => emit('search', props.modelValue ?? '')
           padding-right: 0.75em;
 
           @include hover-within {
-            border-color: $color--border !important;
+            border-color: $color--border;
             box-shadow: 0 0 6px 0 $color--shadow;
           }
         }
@@ -173,10 +173,8 @@ const handleSearch = () => emit('search', props.modelValue ?? '')
 
   &--google {
     #{$self} {
-      &__logo {
-      }
-
       &__input {
+        //..
       }
     }
   }
@@ -198,21 +196,23 @@ const handleSearch = () => emit('search', props.modelValue ?? '')
   }
 
   &--yandex {
+    $color--yandex: #fc0;
+
     #{$self} {
       &__logo {
         .icon {
           max-width: 100px;
         }
 
-        //color: #d0d0d0;
+        color: $color--font-85;
       }
 
       &__input {
         :deep(.input) {
-          border-color: #fc0;
+          border-color: $color--yandex;
 
           @include hover-within {
-            border-color: #fc0 !important;
+            border-color: $color--yandex;
           }
 
           .input__append {
@@ -222,7 +222,7 @@ const handleSearch = () => emit('search', props.modelValue ?? '')
 
             &-wrapper {
               color: $color--black;
-              background-color: #fc0;
+              background-color: $color--yandex;
               overflow: hidden;
               margin-left: $offset-sm;
 

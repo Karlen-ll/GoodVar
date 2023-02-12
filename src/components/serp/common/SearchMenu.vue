@@ -54,7 +54,7 @@ const normalizedMenu = computed<SerpMenuItem[]>(() => {
     }
 
     &--active {
-      border-bottom-color: currentColor;
+      border-bottom-color: currentcolor;
     }
   }
 

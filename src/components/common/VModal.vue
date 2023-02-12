@@ -75,7 +75,6 @@ const handleCloseModal = () => {
 
 .modal {
   z-index: 200;
-
   top: 0;
   left: 0;
   width: 100%;
@@ -154,9 +153,8 @@ const handleCloseModal = () => {
     background-size: 21px 21px;
     backdrop-filter: blur(0.1rem);
   }
-}
 
-.modal {
+  // Vue animation
   &-enter-active,
   &-leave-active {
     transition: opacity 0.5s ease;

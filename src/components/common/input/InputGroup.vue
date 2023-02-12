@@ -117,7 +117,7 @@ const handleRemove = (index: number) => {
     padding: 0;
     margin: #{$offset-lg + $input-padding-y} 0 0 $offset-xs;
 
-    @include hover() {
+    @include hover {
       color: #ff2344;
     }
   }

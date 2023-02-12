@@ -1,26 +1,27 @@
 <script setup lang="ts">
+import { computed } from 'vue'
 import SerpResult from '@serp/common/SerpResult.vue'
 import SerpHeader from '@serp/common/SerpHeader.vue'
-import { SerpData } from '@serp/searchEngine.type'
+import { SerpData, SerpOptions } from '@serp/searchEngine.type'
 import { SERP_MAP } from '@serp/searchEngine.const'
 
-defineProps<{
+const props = defineProps<{
   data: SerpData
 }>()
+
+const options = computed<SerpOptions>(() => {
+  return SERP_MAP[props.data.company]
+})
 </script>
 
 <template>
   <section :class="['serp', `serp--${data.company}`, { [`serp--${data.mode}`]: data.mode }]">
-    <serp-header class="serp__header" :options="SERP_MAP[data.company]" />
+    <serp-header class="serp__header" :company="data.company" />
 
-    <div class="serp__list" role="none">
-      <p class="serp__description" role="presentation">Sample of {{ SERP_MAP[data.company].name }} search engine result</p>
+    <div class="serp__list" :style="`max-width: ${options.width}px`" role="none">
+      <p class="serp__description" role="presentation"> Sample of {{ options.name }} search engine result </p>
 
-      <serp-result
-        v-bind="data"
-        class="serp__item"
-        :aria-label="`Result of ${SERP_MAP[data.company].name} search engine`"
-      />
+      <serp-result v-bind="data" class="serp__item" :aria-label="`Result of ${options.name} search engine`" />
     </div>
   </section>
 </template>
@@ -31,15 +32,15 @@ defineProps<{
 .serp {
   $self: &;
 
-  overflow: auto;
-
   &__header {
-    min-width: 745px;
-    max-width: 820px;
-
     #{$self}--mobile & {
-      max-width: 327px;
+      //max-width: 327px;
     }
+  }
+
+  &__list {
+    position: relative;
+    margin-left: $serp-offset;
   }
 
   &__description {

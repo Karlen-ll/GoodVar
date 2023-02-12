@@ -103,7 +103,6 @@ const handleCloseModal = () => {
     overflow: hidden;
   }
 
-
   &__header {
     border-bottom: 1px solid $color--border;
     padding: 1.15rem 1.25rem 1rem 1.75rem;

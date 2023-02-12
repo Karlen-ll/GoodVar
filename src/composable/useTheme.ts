@@ -28,7 +28,7 @@ export function useTheme() {
     theme.value = inverseThemeMap[theme.value]
 
     document.documentElement.classList.replace(inverseThemeMap[theme.value], theme.value)
-    localStorage.setItem('theme', theme.value);
+    localStorage.setItem('theme', theme.value)
   }
 
   const isDark = computed(() => theme.value === 'dark')

@@ -49,13 +49,14 @@ const handleCopy = () => false
 
   <v-modal v-model="isModalShown">
     <template #header><h1 class="mb-0">Resulting code</h1></template>
-    <p class="code-text_wrapper mt-0"><code>&lt;meta&gt;</code> tags go inside the <code>&lt;head&gt;</code> element.</p>
+    <p class="code-text_wrapper mt-0">
+      <code>&lt;meta&gt;</code>
+      tags go inside the
+      <code>&lt;head&gt;</code>
+      element.
+    </p>
 
-    <switcher-group
-      v-model="modalTab"
-      :items="tabs"
-      type="tab"
-    />
+    <switcher-group v-model="modalTab" :items="tabs" type="tab" />
     <code-frame />
 
     <template #footer>

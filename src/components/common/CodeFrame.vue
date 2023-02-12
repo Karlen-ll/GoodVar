@@ -14,7 +14,7 @@ const props = withDefaults(
   <pre class="code-frame">
     <code class="code-frame__code" :data-lang="lang">
       <span class="code-frame__list" role="list">
-        <span v-for="line in value" class="code-frame__item" role="listitem">
+        <span v-for="line in value" :key="line.toString()" class="code-frame__item" role="listitem">
           <template v-if="Array.isArray(line)">
             {{ line }}
           </template>

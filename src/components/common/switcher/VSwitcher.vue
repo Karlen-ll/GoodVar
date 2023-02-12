@@ -5,7 +5,7 @@ import { ICON_MAP, TYPE_MAP } from '@atom/switcher/switcher.const'
 import { getComponentOptions, ComponentOptions, ComponentState } from '@/utils/componentOptions'
 import { SwitchType, SwitchValue } from '@atom/switcher/switcher.type'
 import { SpriteName } from '@atom/icon/icon.type'
-import VIcon from '.@atom/icon/VIcon.vue'
+import VIcon from '@atom/icon/VIcon.vue'
 
 const props = withDefaults(
   defineProps<{
@@ -302,7 +302,7 @@ const handleValueChange = (event: InputEvent): void => {
 
       &__text {
         margin: 0;
-        padding: 0.5em 0.25em;
+        padding: $offset-sm #{$offset-sm * 0.5};
       }
     }
   }

@@ -23,6 +23,14 @@
   }
 }
 
+@mixin hover-within() {
+  &:hover,
+  &:active,
+  &:focus-within {
+    @content;
+  }
+}
+
 @mixin hover-and-not-disabled($disabledClass) {
   @include hover {
     @if $disabledClass {

@@ -20,6 +20,7 @@ const props = withDefaults(
     state?: ComponentState
     nativePlaceholder?: boolean
     hideSeparator?: boolean
+    appendStretch?: boolean
     clearable?: boolean
     blocked?: boolean
   }>(),
@@ -149,7 +150,10 @@ const handleClickOnShell = (event: Event) => emit('clickOnShell', event)
     </div>
     <div
       v-if="$slots.append || isClearable"
-      :class="['input__append', { 'input__append--empty': !$slots.append && !modelValue }]"
+      :class="[
+        'input__append',
+        { 'input__append--empty': !$slots.append && !modelValue, 'input__append--stretch': appendStretch },
+      ]"
       role="none"
     >
       <template v-if="isClearable">
@@ -294,8 +298,19 @@ $_offset: $offset * 4;
   }
 
   &__append {
+    *,
+    &-wrapper {
+      border-radius: 0 #{$border-radius-sm * 0.75} #{$border-radius-sm * 0.75} 0;
+    }
+
     &:not(&--empty) {
       margin-left: $offset-xs;
+    }
+
+    &--stretch {
+      margin-top: -$input-padding-y;
+      margin-right: -#{$input-padding-x * 0.5};
+      margin-bottom: -$input-padding-y;
     }
   }
 
@@ -309,7 +324,7 @@ $_offset: $offset * 4;
   }
 
   &:not(&--readonly):not(&--disabled):not(&--error) {
-    &:focus-within {
+    @include hover-within {
       border-color: $color--brand;
     }
   }

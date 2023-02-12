@@ -1,11 +1,13 @@
+import { IconName } from '@atom/icon/icon.type'
+
 export type SerpCompany = 'google' | 'microsoft' | 'yandex'
 
 export type SerpMode = 'desktop' | 'mobile'
 
 export type SerpLogo = {
   name: string
-  width: number
-  height: number
+  width?: number
+  height?: number
 }
 
 export type SerpMenuItem = {
@@ -16,17 +18,23 @@ export type SerpMenuItem = {
 export type SerpMenu = (string | SerpMenuItem)[]
 
 export type SerpOptions = {
-  name: string,
-  logo: SerpLogo,
-  menu: SerpMenu,
+  width: number
+  name: string
+  logo: SerpLogo
+  menu: SerpMenu
+  search?: {
+    icon?: IconName
+    text?: string
+    props?: { hideSeparator?: boolean; clearable?: boolean; appendStretch?: boolean }
+  }
 }
 
 export type SerpData = {
+  company: SerpCompany
   title?: string
   desc?: string
   url?: string
   breadcrumbs?: string[]
   protocol?: 'http' | 'https'
-  company?: SerpCompany
   mode?: SerpMode
 }

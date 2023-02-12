@@ -188,6 +188,10 @@ const options = computed<ButtonOptions>(() => {
     background-color: transparent;
   }
 
+  &--default {
+    color: inherit;
+  }
+
   &--icon,
   &--link {
     color: $color--brand;

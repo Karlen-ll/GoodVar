@@ -28,7 +28,13 @@ const handleChangeTheme = () => {
 
     <hr class="vertical" />
 
-    <v-switch v-model="switchValue" class="menu__switch menu__switch--theme" mode="secondary" :icons="['sun', 'moon']" @change="handleChangeTheme" />
+    <v-switch
+      v-model="switchValue"
+      class="menu__switch menu__switch--theme"
+      mode="secondary"
+      :icons="['sun', 'moon']"
+      @change="handleChangeTheme"
+    />
 
     <a href="#" class="menu__link menu__link--circle ml-lg" aria-label="GitHub">
       <v-icon name="github" />

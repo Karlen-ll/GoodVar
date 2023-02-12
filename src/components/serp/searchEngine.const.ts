@@ -2,7 +2,8 @@ import { SerpOptions } from '@serp/searchEngine.type'
 
 export const SERP_MAP: Record<'google' | 'microsoft' | 'yandex', SerpOptions> = {
   google: {
-    logo: { name: 'google', width: 160, height: 53 },
+    width: 600,
+    logo: { name: 'google' },
     name: 'Google',
     menu: [
       'All',
@@ -17,19 +18,15 @@ export const SERP_MAP: Record<'google' | 'microsoft' | 'yandex', SerpOptions> = 
   },
 
   microsoft: {
-    logo: { name: 'bing', width: 160, height: 53 },
+    width: 608,
+    logo: { name: 'bing' },
     name: 'Microsoft Bing',
-    menu: [
-      'All',
-      'Images',
-      'Videos',
-      'Maps',
-      'News',
-    ],
+    menu: ['All', 'Images', 'Videos', 'Maps', 'News'],
   },
 
   yandex: {
-    logo: { name: 'yandex', width: 160, height: 53 },
+    width: 536,
+    logo: { name: 'yandex' },
     name: 'Yandex',
     menu: [
       'All',
@@ -41,5 +38,9 @@ export const SERP_MAP: Record<'google' | 'microsoft' | 'yandex', SerpOptions> = 
       { label: 'Translate', hideOnMobile: true },
       { label: 'More', hideOnMobile: true },
     ],
+    search: {
+      text: 'Search',
+      props: { hideSeparator: true, appendStretch: true },
+    },
   },
 }

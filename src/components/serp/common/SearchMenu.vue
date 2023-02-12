@@ -22,13 +22,7 @@ const normalizedMenu = computed<SerpMenuItem[]>(() => {
 
 <template>
   <div class="menu" role="presentation">
-    <switcher-group
-      v-model="activeIndex"
-      :items="normalizedMenu"
-      :label="title"
-      type="tab"
-      hide-label
-    />
+    <switcher-group v-model="activeIndex" :items="normalizedMenu" :label="title" type="tab" hide-label />
   </div>
 </template>
 

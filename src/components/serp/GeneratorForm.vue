@@ -10,6 +10,8 @@ defineProps<{
   modelValue: SerpData
   companies: SwitchGroupItem[]
 }>()
+
+// TODO Unexpected mutation of "modelValue" prop
 </script>
 
 <template>
@@ -17,15 +19,22 @@ defineProps<{
     <header class="mb-xl">
       <h1>SERPs Snippet Generator</h1>
       <p class="form__description">
-        Enter your <mark>title</mark>, <mark>description</mark> and <mark>web address</mark> to see your website's Search
-        Engine Results Pages (SERPs) snippet preview.
+        Enter your <mark>title</mark>, <mark>description</mark> and <mark>web address</mark> to see your website's
+        Search Engine Results Pages (SERPs) snippet preview.
       </p>
     </header>
 
     <div class="grid">
       <div role="none">
         <v-input id="title" v-model="modelValue.title" tag="textarea" :limit="70" placeholder="Title" rows="1" />
-        <v-input id="description" v-model="modelValue.desc" tag="textarea" placeholder="Description" :limit="180" rows="3" />
+        <v-input
+          id="description"
+          v-model="modelValue.desc"
+          tag="textarea"
+          placeholder="Description"
+          :limit="180"
+          rows="3"
+        />
         <p class="form__input-description" style="line-height: 1.4">
           You can add special characters and emoticons from
           <a href="https://unicode-table.com/sets/" target="_blank">unicode&nbsp;table</a>.

@@ -1,6 +1,6 @@
 import { ref, computed, Ref } from 'vue'
 
-export function useLocalValue<T extends unknown>(modelValue: Ref<T>, updateValue: (value?: T) => void) {
+export function useLocalValue<T>(modelValue: Ref<T>, updateValue: (value?: T) => void) {
   const _value = ref<T>()
 
   const localValue = computed<T | undefined>({

@@ -1,10 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import VSwitcher from '@atom/switcher/VSwitcher.vue'
-import { SerpMenuItem } from '@serp/searchEngine.type'
-import { SwitchType, SwitchValue, SwitchGroupItem } from '@atom/switcher/switcher.type'
-
-type NormalSwitchGroupItem = Omit<SerpMenuItem, 'checkedValue'> & { checkedValue: SwitchValue }
+import { SwitchType, SwitchValue, SwitchGroupItem, NormalSwitchGroupItem } from '@atom/switcher/switcher.type'
 
 const props = withDefaults(
   defineProps<{
@@ -29,11 +26,28 @@ const emit = defineEmits<{
 
 const normalizedItems = computed<NormalSwitchGroupItem[]>(() => {
   return props.items?.map((item, index) => {
-    if (!item.checkedValue) {
-      item.checkedValue = index
+    if (typeof item === 'string') {
+      return { label: item, checkedValue: index }
     }
 
-    return item as NormalSwitchGroupItem
+    const result: NormalSwitchGroupItem = {
+      label: item.label,
+      checkedValue: item.checkedValue ?? index,
+    }
+
+    if (item.checked) {
+      result.checked = item.checked
+    }
+
+    if (item.state) {
+      result.state = item.state
+    }
+
+    if (item.icons) {
+      result.icons = item.icons
+    }
+
+    return result
   })
 })
 
@@ -68,12 +82,9 @@ const handleUpdate = (value: SwitchValue) => {
 
   position: relative;
   border-radius: $border-radius-sm;
-
-  &:not(&--with-border) {
-    border: none;
-    padding: 0;
-    margin: 0;
-  }
+  border: none;
+  padding: 0;
+  margin: 0;
 
   &--with-border {
     border: 1px solid $color--border;

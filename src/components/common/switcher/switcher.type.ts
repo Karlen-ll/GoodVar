@@ -7,9 +7,19 @@ export type SwitchArray = (number | string)[]
 
 export type SwitchValue = number | string | boolean | SwitchArray
 
-export type SwitchGroupItem = {
+export type SwitchGroupItem =
+  | {
+      label: string
+      checkedValue?: SwitchValue
+      checked?: boolean
+      state?: ComponentState
+      icons?: [SpriteName, SpriteName]
+    }
+  | string
+
+export type NormalSwitchGroupItem = {
   label: string
-  checkedValue?: SwitchValue
+  checkedValue: SwitchValue
   checked?: boolean
   state?: ComponentState
   icons?: [SpriteName, SpriteName]

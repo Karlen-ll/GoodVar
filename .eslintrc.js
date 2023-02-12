@@ -46,6 +46,7 @@ module.exports = {
     'vue/object-curly-spacing': ['error', 'always', { objectsInObjects: true }],
     'vue/component-name-in-template-casing': ['error', 'kebab-case', { ignores: [] }],
     'vue/v-on-event-hyphenation': ['error', 'always', { ignore: ['update:modelValue'] }],
+    'vue/no-parsing-error': ['error', { 'x-invalid-namespace': false }],
 
     'vue/html-self-closing': [
       'error',

@@ -5,20 +5,30 @@ import SerpHeader from '@serp/common/SerpHeader.vue'
 import { SerpData, SerpOptions } from '@serp/searchEngine.type'
 import { SERP_MAP } from '@serp/searchEngine.const'
 
+type SearchEngineOptions = Omit<SerpOptions, 'width'> & { listStyle?: string }
+
 const props = defineProps<{
   data: SerpData
 }>()
 
-const options = computed<SerpOptions>(() => {
-  return SERP_MAP[props.data.company]
+const options = computed<SearchEngineOptions>(() => {
+  const result: SearchEngineOptions = {
+    ...SERP_MAP[props.data.company]
+  }
+
+  if (props.data.mode !== 'mobile') {
+    result.listStyle = `max-width: ${SERP_MAP[props.data.company].width}px`
+  }
+
+  return result
 })
 </script>
 
 <template>
   <section :class="['serp', `serp--${data.company}`, { [`serp--${data.mode}`]: data.mode }]">
-    <serp-header class="serp__header" :company="data.company" />
+    <serp-header class="serp__header" :company="data.company" :mode="data.mode" />
 
-    <div class="serp__list" :style="`max-width: ${options.width}px`" role="none">
+    <div class="serp__list" :style="options.listStyle" role="none">
       <p class="serp__description" role="presentation"> Sample of {{ options.name }} search engine result </p>
 
       <serp-result v-bind="data" class="serp__item" :aria-label="`Result of ${options.name} search engine`" />
@@ -32,9 +42,13 @@ const options = computed<SerpOptions>(() => {
 .serp {
   $self: &;
 
-  &__header {
-    #{$self}--mobile & {
-      //max-width: 327px;
+  &--mobile {
+    @media screen and #{$media-phone} {
+      max-width: $breakpoint-xs;
+    }
+
+    #{$self}__list {
+      margin-left: 0;
     }
   }
 

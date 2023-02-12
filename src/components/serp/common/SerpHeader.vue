@@ -4,17 +4,19 @@ import VIcon from '@atom/icon/VIcon.vue'
 import VInput from '@atom/input/VInput.vue'
 import VButton from '@atom/button/VButton.vue'
 import SwitcherGroup from '@atom/switcher/SwitcherGroup.vue'
-import { SerpCompany, SerpOptions } from '@serp/searchEngine.type'
+import { SerpCompany, SerpMode, SerpOptions } from '@serp/searchEngine.type'
 import { SERP_MAP } from '@serp/searchEngine.const'
 
 const props = withDefaults(
   defineProps<{
     modelValue?: string
     company: SerpCompany
+    mode?: SerpMode
   }>(),
   {
     company: 'google',
     searchIcon: 'search',
+    mode: 'desktop',
   }
 )
 
@@ -27,9 +29,15 @@ const inputValue = ref('')
 const currentMenu = ref<number>(0)
 
 const options = computed<SerpOptions>(() => {
+  let menu = SERP_MAP[props.company]?.menu?.map((item) => (typeof item === 'string' ? { label: item } : item))
+
+  if (menu && props.mode === 'mobile') {
+    menu = menu.filter((item) => !item.hideOnMobile)
+  }
+
   return {
     ...SERP_MAP[props.company],
-    menu: SERP_MAP[props.company]?.menu?.map((item) => (typeof item === 'string' ? { label: item } : item)) ?? [],
+    menu: menu ?? [],
   }
 })
 
@@ -37,7 +45,7 @@ const handleSearch = () => emit('search', props.modelValue ?? '')
 </script>
 
 <template>
-  <header :class="['serp-header', `serp-header--${props.company}`]" role="presentation">
+  <header :class="['serp-header', `serp-header--${props.company}`, `serp-header--${props.mode}`]" role="presentation">
     <div class="serp-header__search">
       <!-- @slot Slot for `prepend` elements -->
       <slot name="prepend" />
@@ -84,8 +92,11 @@ const handleSearch = () => emit('search', props.modelValue ?? '')
 
   &__search {
     width: 100%;
-    max-width: 770px;
-    display: flex;
+
+    #{$self}--desktop & {
+      display: flex;
+      max-width: 770px;
+    }
   }
 
   &__logo {
@@ -97,6 +108,10 @@ const handleSearch = () => emit('search', props.modelValue ?? '')
     padding-right: #{$serp-offset * 0.13};
     box-sizing: border-box;
     position: relative;
+
+    #{$self}--mobile & {
+      margin-bottom: $offset-md;
+    }
 
     .icon {
       width: 100%;
@@ -112,6 +127,10 @@ const handleSearch = () => emit('search', props.modelValue ?? '')
     width: 100%;
     display: flex;
     margin: 1em 0 0 $serp-offset;
+
+    #{$self}--mobile & {
+      margin-left: 0;
+    }
 
     &.switcher-group {
       border-radius: 0;

@@ -18,6 +18,7 @@ const data = reactive<SerpData>({
   url: 'sample.com',
   breadcrumbs: ['Bernard Baruch'],
   company: 'google',
+  mode: 'mobile',
 })
 
 const companies = [

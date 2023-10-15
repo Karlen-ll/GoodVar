@@ -1,0 +1,46 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+# IDE folders
+node_modules/
+dist/
+dist-ssr/
+old/
+
+# IDE
+.idea
+.vscode
+
+# env files
+.env
+.npmrc
+
+# Cashe
+.npm
+.eslintcache
+.stylelintcache
+.yarn-cache
+
+# MacOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+[Dd]esktop.ini
+$RECYCLE.BIN/
+*.lnk
+
+# Linux
+.fuse_hidden*
+.directory
+.Trash-*
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+/old/

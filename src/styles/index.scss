@@ -1,0 +1,315 @@
+:root {
+  --color-brand: #1677ff;
+  --color-brand-accent: #4096ff;
+  --color-brand-65: rgb(22 119 255 / 0.65);
+  --color-brand-35: rgb(22 119 255 / 0.35);
+  --color-danger: #ff5964;
+
+  font-family: 'Inter', 'Avenir', 'Helvetica', 'Arial', sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  font-weight: 400;
+  color-scheme: light dark;
+  color: $color--font;
+  background-color: $color--background;
+  font-synthesis: none;
+  text-rendering: optimizelegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.dark {
+  --color-font: #e5e5e5;
+  --color-font-85: rgb(229 229 229 / 0.85);
+  --color-font-65: rgb(229 229 229 / 0.65);
+  --color-font-35: rgb(229 229 229 / 0.35);
+  --color-shadow: rgb(255 255 255 / 0.12);
+  --color-scrollbar: #424242;
+  --color-border: #545454;
+  --color-background: #242424;
+  --color-accent-bg: #2c2c2c;
+  --color-obscure-bg: #4c4d4f;
+  --color-overlay: rgb(60 60 60 / 0.6);
+}
+
+.light {
+  --color-font: #1a1a1a;
+  --color-font-85: rgb(26 26 26 / 0.85);
+  --color-font-65: rgb(26 26 26 / 0.65);
+  --color-font-35: rgb(26 26 26 / 0.35);
+  --color-shadow: rgb(0 0 0 / 0.12);
+  --color-scrollbar: #424242;
+  --color-border: #ccc;
+  --color-background: #f7f7f7;
+  --color-accent-bg: #fff;
+  --color-obscure-bg: #dcdfe6;
+  --color-overlay: rgb(36 36 36 / 0.6);
+}
+
+html {
+  text-align: left;
+  font-size: 16px;
+  line-height: 1.7;
+  font-weight: 400;
+  word-wrap: break-word;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+h1,
+h2,
+h3 {
+  font-weight: 600;
+  color: $color--font-85;
+}
+
+h1 {
+  font-size: $input-height;
+  line-height: 1.4;
+  letter-spacing: -0.02em;
+  margin: 0 0 $offset-xs;
+}
+
+h2 {
+  font-size: 24px;
+  line-height: 1.5;
+  letter-spacing: -0.02em;
+  margin: 0 0 $offset-sm;
+}
+
+h3 {
+  font-size: 19px;
+  letter-spacing: -0.01em;
+  margin: 0 0 $offset-md;
+}
+
+p {
+  margin: $offset-md 0;
+}
+
+hr {
+  margin: $offset-xl-rem 0;
+
+  &.vertical {
+    width: 1px;
+    height: 80%;
+    border: none;
+    border-left: 1px solid $color--border;
+    margin: 0 $offset-xl-rem;
+  }
+}
+
+code,
+kbd,
+samp {
+  font-family: monospace, sans-serif;
+  font-size: 0.85em;
+}
+
+pre {
+  font-family: monospace, sans-serif;
+  font-size: 1em;
+  overflow: auto;
+}
+
+mark,
+code {
+  background-color: $color--shadow;
+  border-radius: 0.28em;
+  word-wrap: break-word;
+  padding: 0.15em 0.4em;
+}
+
+mark {
+  color: inherit;
+  background-color: $color--shadow;
+}
+
+a {
+  font-weight: 500;
+  text-decoration: inherit;
+
+  @include link($color--brand, $color--brand-accent);
+}
+
+#app {
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+}
+
+.visually-hidden {
+  @include visually-hidden;
+}
+
+.container {
+  min-height: 100%;
+  box-sizing: border-box;
+  padding: $offset-lg-rem;
+  overflow: hidden;
+
+  &--center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+}
+
+.button-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+
+  &:not(&--right) {
+    > .button,
+    > .switcher,
+    > .switcher-group {
+      &:not(:last-child) {
+        margin-right: $offset-md;
+      }
+    }
+  }
+
+  &--right {
+    justify-content: end;
+
+    > .button,
+    > .switcher,
+    > .switcher-group {
+      &:not(:first-child) {
+        margin-left: $offset-md;
+      }
+    }
+  }
+
+  &--space {
+    justify-content: space-between;
+  }
+}
+
+.list {
+  list-style: none;
+  display: flex;
+  padding: 0;
+  margin: 0;
+
+  &__item {
+    &:not(&:last-child) {
+      margin-right: $offset-md;
+    }
+  }
+
+  // Vue animations
+  &-enter-active {
+    transition: opacity $timeout-lg ease, transform $timeout-lg ease;
+  }
+
+  &-leave-active {
+    transition: opacity $timeout-md ease, transform $timeout-md ease;
+  }
+
+  &-enter-from,
+  &-leave-to {
+    opacity: 0;
+    transform: translateX(1em);
+  }
+}
+
+.grid {
+  display: grid;
+
+  @media screen and #{$media-tablet} {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 0 $offset-md-rem;
+  }
+}
+
+// ↓↓↓ Margin & padding
+
+@each $size-prefix, $size in (0: 0, xs: 0.5, sm: 0.75, md: 1, lg: 1.5, xl: 2) {
+  @each $direction-prefix, $direction in ('': '', t: -top, r: -right, l: -left, b: -bottom) {
+    .m#{$direction-prefix}-#{$size-prefix} {
+      @if $size == 0 {
+        margin#{$direction}: #{$size};
+      } @else {
+        margin#{$direction}: #{$size + rem};
+      }
+    }
+
+    $min: $size >= 1;
+    $max: $size < 2;
+
+    @if $min and $max {
+      .m#{$direction-prefix}-#{$size-prefix}-n {
+        margin#{$direction}: -#{$size + rem};
+      }
+    }
+  }
+}
+
+/** ↓↓↓ Scrollbar */
+
+::-webkit-scrollbar {
+  width: 0.45em;
+
+  &-track {
+    border-radius: 0.5em;
+    background: rgba($color--scrollbar, 0.2);
+  }
+
+  &-thumb {
+    border-radius: 0.5em;
+    background: $color--scrollbar;
+  }
+
+  &-corner {
+    background: transparent;
+  }
+}
+
+/** ↓↓↓ Resizer */
+
+::-webkit-resizer {
+  background-image: url('#{$sprite_path}#resize-view');
+  background-color: transparent;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 100% 80%;
+  overflow: hidden;
+}
+
+/** ↓↓↓ Animation */
+
+.fade {
+  &-enter-active,
+  &-leave-active {
+    transition: opacity $timeout-lg;
+  }
+
+  &-enter-from,
+  &-leave-to {
+    opacity: 0;
+  }
+}
+
+/** ↓↓↓ Media */
+
+//@media (prefers-color-scheme: dark) {
+//  :root {
+//    --color-font: #e5e5e5;
+//    --color-font-85: rgba(229, 229, 229, 0.85);
+//    --color-font-65: rgba(229, 229, 229, 0.65);
+//    --color-font-35: rgba(229, 229, 229, 0.35);
+//    --color-shadow: rgba(255,255,255, 0.12);
+//    --color-scrollbar: #424242;
+//    --color-background: #242424;
+//  }
+//}

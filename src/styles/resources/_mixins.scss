@@ -1,0 +1,120 @@
+@mixin visually-hidden {
+  width: 1px;
+  height: 1px;
+  position: absolute;
+  clip-path: inset(100%);
+  border: 0;
+  white-space: nowrap;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+}
+
+@mixin hover() {
+  &:-moz-focusring {
+    @content;
+  }
+
+  &:hover,
+  &:active,
+  &:focus-visible {
+    @content;
+  }
+}
+
+@mixin hover-within() {
+  &:hover,
+  &:active,
+  &:focus-within {
+    @content;
+  }
+}
+
+@mixin hover-and-not-disabled($disabledClass) {
+  @include hover {
+    @if $disabledClass {
+      &:not(:disabled),
+      #{$disabledClass} {
+        @content;
+      }
+    } @else {
+      &:not(:disabled) {
+        @content;
+      }
+    }
+  }
+}
+
+@mixin link($color, $activeColor: $color) {
+  @content;
+
+  &,
+  &:visited {
+    color: $color;
+  }
+
+  @include hover {
+    color: $activeColor;
+  }
+}
+
+// Vue Animation
+
+// Start enter animation
+@mixin VueEnter($name) {
+  .#{$name}-enter {
+    @content;
+  }
+}
+
+// Animation enter in progress
+@mixin VueEnterActive($name) {
+  .#{$name}-enter-active {
+    @content;
+  }
+}
+
+// End enter animation
+@mixin VueEnterTo($name) {
+  .#{$name}-enter-to {
+    @content;
+  }
+}
+
+// Start leave animation
+@mixin VueLeave($name) {
+  .#{$name}-leave {
+    @content;
+  }
+}
+
+// Animation leave in progress
+@mixin VueLeaveActive($name) {
+  .#{$name}-leave-active {
+    @content;
+  }
+}
+
+// End leave animation
+@mixin VueLeaveTo($name) {
+  .#{$name}-leave-to {
+    @content;
+  }
+}
+
+// Start enter animation
+@mixin VueShow($name) {
+  .#{$name}-enter,
+  .#{$name}-leave-to {
+    @content;
+  }
+}
+
+// Animation enter in progress
+@mixin VueHide($name) {
+  .#{$name}-enter-active,
+  .#{$name}-leave-active {
+    @content;
+  }
+}

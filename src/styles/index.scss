@@ -16,7 +16,6 @@
   text-rendering: optimizelegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  -webkit-text-size-adjust: 100%;
 }
 
 .dark {
@@ -238,7 +237,7 @@ a {
 @each $size-prefix, $size in (0: 0, xs: 0.5, sm: 0.75, md: 1, lg: 1.5, xl: 2) {
   @each $direction-prefix, $direction in ('': '', t: -top, r: -right, l: -left, b: -bottom) {
     .m#{$direction-prefix}-#{$size-prefix} {
-      @if  $size == 0 {
+      @if $size == 0 {
         margin#{$direction}: #{$size};
       } @else {
         margin#{$direction}: #{$size + rem};

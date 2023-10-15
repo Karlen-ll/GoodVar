@@ -5,9 +5,13 @@ import VFooter from '@/components/VFooter.vue'
 
 <template>
   <div class="layout">
-    <v-header class="layout__header" />
+    <router-view name="header">
+      <v-header class="layout__header" />
+    </router-view>
     <div class="layout__body"><router-view /></div>
-    <v-footer class="layout__footer" />
+    <router-view name="footer">
+      <v-footer class="layout__footer" />
+    </router-view>
   </div>
 </template>
 

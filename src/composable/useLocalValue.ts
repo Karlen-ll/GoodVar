@@ -1,23 +1,27 @@
-import { ref, computed, Ref } from 'vue'
+import { ref, computed } from 'vue'
 
-export function useLocalValue<T>(modelValue: Ref<T>, updateValue: (value?: T) => void) {
-  const _value = ref<T>()
+export function useLocalValue<T>(
+  props: Record<string, any>,
+  {
+    keyOfProp = 'modelValue',
+    onUpdateProp,
+  }: { keyOfProp?: string; onUpdateProp?: (newValue?: T, oldValue?: T) => void } = {}
+) {
+  const localValue = ref<T | undefined>()
 
-  const localValue = computed<T | undefined>({
+  return computed<T | undefined>({
     get() {
-      return typeof modelValue.value == 'undefined' ? _value.value : modelValue.value
+      return typeof props[keyOfProp] == 'undefined' ? localValue.value : props[keyOfProp]
     },
 
     set(value?: T) {
-      updateValue(value)
+      const isLocalValue = typeof props[keyOfProp] == 'undefined'
 
-      if (typeof modelValue.value === 'undefined') {
-        _value.value = value
+      onUpdateProp?.(value, isLocalValue ? localValue.value : props[keyOfProp])
+
+      if (isLocalValue) {
+        localValue.value = value
       }
     },
   })
-
-  return {
-    localValue,
-  }
 }

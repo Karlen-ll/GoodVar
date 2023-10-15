@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { ref, computed, useAttrs, useSlots } from 'vue'
-import { ComponentOptions, ComponentState, getComponentOptions } from '@/utils/componentOptions'
+import { getComponentDetail } from '@/utils/componentOptions'
 import VButton from '@atom/button/VButton.vue'
+import { InputState, InputTag } from '@atom/input/input.type'
 
 const DEFAULT_LINE_HEIGHT = 24
 const DEFAULT_ROWS = 3
@@ -12,12 +13,12 @@ const props = withDefaults(
     id?: string
     rows?: string | number | 'auto'
     minRows?: string | number
-    tag?: 'input' | 'textarea'
+    tag?: InputTag
     type?: string
     limit?: number
     placeholder?: string
     inputClass?: string
-    state?: ComponentState
+    state?: InputState
     nativePlaceholder?: boolean
     hideSeparator?: boolean
     appendStretch?: boolean
@@ -41,20 +42,20 @@ const fieldFocus = ref(false)
 const attrs = useAttrs()
 const slots = useSlots()
 
+const detail = computed(() => {
+  return getComponentDetail('input', { state: props.state, mode: { textarea: isInputField.value } })
+})
+
 const isInputField = computed<boolean>(() => props.tag === 'input')
 const hasSeparator = computed<boolean>(() => props.clearable && !!slots.append && !props.hideSeparator)
-const isClearable = computed<boolean>(() => props.clearable && !options.value.isDisabled && !options.value.isReadonly)
+const isClearable = computed<boolean>(() => props.clearable && !detail.value.disabled && !detail.value.readonly)
 const wrapperClass = computed<string>(() => (attrs.class as string | undefined) ?? '')
-const options = computed<ComponentOptions>(() =>
-  getComponentOptions('input', { state: props.state, modes: isInputField.value && 'textarea' })
-)
 
 const isRaisedPlaceholder = computed(() => {
   return (
     props.placeholder &&
     !props.nativePlaceholder &&
-    (!!props.modelValue ||
-      (fieldFocus.value && !options.value.isDisabled && !options.value.isReadonly && !props.blocked))
+    (!!props.modelValue || (fieldFocus.value && !detail.value.disabled && !detail.value.readonly && !props.blocked))
   )
 })
 
@@ -108,7 +109,7 @@ const handleClickOnShell = (event: Event) => emit('clickOnShell', event)
 
 <template>
   <div
-    :class="['input', { 'input--with-placeholder': !nativePlaceholder && placeholder }, wrapperClass, options.classes]"
+    :class="['input', { 'input--with-placeholder': !nativePlaceholder && placeholder }, wrapperClass, detail.classes]"
     role="none"
     @click="handleClickOnShell"
   >
@@ -130,8 +131,8 @@ const handleClickOnShell = (event: Event) => emit('clickOnShell', event)
       :id="id"
       ref="fieldReference"
       v-bind="fieldAttrs"
-      :disabled="options.isDisabled"
-      :readonly="options.isReadonly || blocked"
+      :disabled="detail.disabled"
+      :readonly="detail.readonly || blocked"
       :value="modelValue"
       :type="type"
       :class="['input__field', { 'input__field--hide-placeholder': !nativePlaceholder }, inputClass]"

@@ -3,16 +3,16 @@ import { computed } from 'vue'
 import VLoader from '@atom/icon/VLoader.vue'
 import VIcon from '@atom/icon/VIcon.vue'
 import { RouterLink } from 'vue-router'
-import { getComponentOptions, ComponentState } from '@/utils/componentOptions'
-import { ButtonMode, ButtonIcons, ButtonOptions } from '@atom/button/button.type'
+import { getComponentDetail, ComponentDetailResult } from '@/utils/componentOptions'
+import { ButtonState, ButtonMode, ButtonType, ButtonTag, ButtonIcon } from '@atom/button/button.type'
 
 const props = withDefaults(
   defineProps<{
-    tag?: 'button' | 'div' | 'a' | 'routerLink'
-    type?: 'button' | 'submit' | 'reset'
+    tag?: ButtonTag
+    type?: ButtonType
     mode?: ButtonMode
-    state?: ComponentState
-    icon?: string | ButtonIcons
+    state?: ButtonState
+    icon?: string | ButtonIcon
     circle?: boolean
   }>(),
   {
@@ -22,20 +22,31 @@ const props = withDefaults(
   }
 )
 
-const options = computed<ButtonOptions>(() => {
-  const result: ButtonOptions = getComponentOptions('button', {
-    state: props.state,
-    modes: props.mode,
-  })
+const detail = computed(() => {
+  return getComponentDetail('button', { state: props.state, mode: props.mode })
+})
 
-  if (props.icon) {
-    const isString = typeof props.icon === 'string'
-    result.icon = isString ? { name: props.icon } : (result.icon = props.icon)
+const iconDetail = computed<(Omit<ButtonIcon, 'modes'> & Partial<ComponentDetailResult>) | undefined>(() => {
+  if (!props.icon) {
+    return
+  }
 
-    if (!isString && props.icon.modes) {
-      result.icon.classes = (typeof props.icon.modes !== 'string' ? props.icon.modes : [props.icon.modes]).map(
-        (mode) => `button__icon--${mode}`
-      )
+  if (typeof props.icon === 'string') {
+    return { name: props.icon }
+  }
+
+  let result: Omit<ButtonIcon, 'modes'> = { name: props.icon.name }
+
+  if (props.icon.size) {
+    result.size = props.icon.size
+  }
+
+  if (props.icon.mode) {
+    result = {
+      ...result,
+      ...getComponentDetail('button__icon', {
+        mode: props.icon.mode,
+      }),
     }
   }
 
@@ -47,16 +58,16 @@ const options = computed<ButtonOptions>(() => {
   <component
     :is="tag === 'routerLink' ? RouterLink : tag"
     :type="type"
-    :class="['button', { 'button--circle': circle }, options.classes]"
-    :disabled="options.isDisabled || options.isLoading"
+    :class="['button', { 'button--circle': circle }, detail.classes]"
+    :disabled="detail.disabled || detail.loading"
   >
-    <v-loader v-if="options.isLoading" class="button__loader" />
+    <v-loader v-if="detail.loading" class="button__loader" />
     <slot />
     <v-icon
-      v-if="options.icon"
-      :name="options.icon.name"
-      :size="options.icon.size"
-      :class="['button__icon', options.icon.classes]"
+      v-if="iconDetail"
+      :name="iconDetail.name"
+      :size="iconDetail.size"
+      :class="['button__icon', iconDetail.classes]"
     />
   </component>
 </template>
@@ -73,6 +84,7 @@ const options = computed<ButtonOptions>(() => {
   justify-content: center;
   box-sizing: border-box;
   text-decoration: none;
+  color: $color--font-65;
   background-color: transparent;
   border: 1px solid transparent;
   transition-property: color, background-color, border-color;
@@ -81,6 +93,10 @@ const options = computed<ButtonOptions>(() => {
   cursor: pointer;
   user-select: none;
   padding: 0;
+
+  @include hover-and-not-disabled(#{$self}--disabled) {
+    color: $color--font;
+  }
 
   &:active {
     transform: translateY(1px);
@@ -147,6 +163,7 @@ const options = computed<ButtonOptions>(() => {
 
     @include hover-and-not-disabled(#{$self}--disabled) {
       border: 1px solid $color--brand-accent;
+      color: $color--white;
       background-color: $color--brand-accent;
     }
   }

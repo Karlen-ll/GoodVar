@@ -1,52 +1,48 @@
-export type ComponentState = 'disabled' | 'readonly' | 'default' | 'loading' | 'error' | 'success'
-export type ComponentOptions = {
-  classes?: string | string[]
-  isDisabled?: boolean
-  isReadonly?: boolean
-  isLoading?: boolean
-  isSuccess?: boolean
-  isError?: boolean
+import { State, Size, DefaultValue, DefaultOrEmptyValue } from '@/type/state'
+
+export type ComponentDetailResult = { classes: string[] } & Partial<Record<DefaultValue | State | Size, boolean>>
+export type ComponentDetailMode = string | Record<string, boolean>
+export type ComponentDetailOptions = {
+  state?: DefaultOrEmptyValue | State
+  size?: DefaultOrEmptyValue | Size
+  mode?: ComponentDetailMode | ComponentDetailMode[]
 }
+const getClassName = (className: string, modifier: string) => `${className}--${modifier}`
 
-export const stateMap = {
-  disabled: 'isDisabled',
-  readonly: 'isReadonly',
-  loading: 'isLoading',
-  success: 'isSuccess',
-  error: 'isError',
-} as const
+/** Формируем карту свойств & классы для компонента
+ * @example Если в `options` передать:
+ * { state: 'loading', mode: ['primary', { thin: true }] }
+ * @example Метод вернёт:
+ * { classes: ['component--loading', 'component--primary', 'component--thin'], loading: true } */
+export const getComponentDetail = (className: string, options?: ComponentDetailOptions) => {
+  const result: ComponentDetailResult = { classes: [] as string[] }
 
-export const getClassNames = (prefix: string, modes: string | string[], extraClass?: string) => {
-  if (Array.isArray(modes)) {
-    const classNames = modes.map((mode) => `${prefix}--${mode}`)
-
-    if (extraClass) {
-      classNames.unshift(extraClass)
-    }
-
-    return classNames
-  }
-
-  return extraClass ? [extraClass, `${prefix}--${modes}`] : `${prefix}--${modes}`
-}
-
-export const getComponentOptions = (
-  className: string,
-  options?: { state?: ComponentState; modes?: false | string | string[] }
-): ComponentOptions => {
   if (!options) {
-    return {}
+    return result
   }
 
-  const result: ComponentOptions = {}
+  ;(['state', 'size'] as const).forEach((key) => {
+    if (options[key] && options[key] !== 'default') {
+      result[options[key] as State] = true
+      result.classes.push(getClassName(className, options[key] as State))
+    }
+  })
 
-  if (options.state && options.state !== 'default') {
-    result[stateMap[options.state]] = true
-    result.classes = `${className}--${options.state}`
-  }
+  if (options.mode) {
+    const modes = Array.isArray(options.mode) ? options.mode : [options.mode]
 
-  if (options.modes) {
-    result.classes = getClassNames(className, options.modes, result.classes as string)
+    modes.forEach((mode) => {
+      if (typeof mode === 'string') {
+        result.classes.push(getClassName(className, mode))
+        return
+      }
+
+      for (const key in mode) {
+        if (mode[key]) {
+          result.classes.push(getClassName(className, key))
+        }
+      }
+    })
   }
 
   return result

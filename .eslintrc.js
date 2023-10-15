@@ -28,18 +28,6 @@ module.exports = {
     'object-curly-spacing': ['error', 'always', { objectsInObjects: true }],
     'no-irregular-whitespace': 'off',
 
-    'max-len': [
-      'error',
-      {
-        code: 120,
-        tabWidth: 2,
-        ignoreUrls: true,
-        ignoreComments: true,
-        ignoreTrailingComments: true,
-        ignorePattern: 'd="([\\s\\S]*?)"',
-      },
-    ],
-
     'vue/no-v-html': 'off',
     'vue/require-default-prop': 'off',
     'vue/no-side-effects-in-computed-properties': 'off',

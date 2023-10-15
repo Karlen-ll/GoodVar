@@ -9,7 +9,7 @@ import { routeNames } from '@/router/routes'
     <span class="page__description">
       The title and description of your website sets you apart from your competitors in search results.
     </span>
-    <v-button tag="routerLink" :to="routeNames.GENERATOR" mode="primary" :icon="{ name: 'right', modes: 'moves' }">
+    <v-button tag="routerLink" :to="routeNames.GENERATOR" mode="primary" :icon="{ name: 'right', mode: 'moves' }">
       Get started
     </v-button>
   </div>

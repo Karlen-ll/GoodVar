@@ -1,4 +1,5 @@
 import { defineConfig } from 'vite'
+// import autoprefixer from 'autoprefixer'
 import svgLoader from 'vite-svg-loader'
 import vue from '@vitejs/plugin-vue'
 import path from 'path'
@@ -14,6 +15,7 @@ export default defineConfig({
 
   css: {
     preprocessorOptions: { scss: { additionalData: '@use "./src/styles/resources" as *;' } },
+    // postcss: { plugins: [autoprefixer({})] },
   },
 
   plugins: [vue(), svgLoader({ defaultImport: 'component' })],

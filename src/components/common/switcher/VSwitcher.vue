@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { computed } from 'vue'
 import { toggleArrayElement } from '@/utils'
+import { useLocalValue } from '@/composable/useLocalValue'
 import { ICON_MAP, TYPE_MAP } from '@atom/switcher/switcher.const'
-import { getComponentOptions, ComponentOptions, ComponentState } from '@/utils/componentOptions'
-import { SwitchType, SwitchValue } from '@atom/switcher/switcher.type'
+import { getComponentDetail } from '@/utils/componentOptions'
+import { SwitchState, SwitchType, SwitchValue, SwitchMode } from '@atom/switcher/switcher.type'
 import { SpriteName } from '@atom/icon/icon.type'
 import VIcon from '@atom/icon/VIcon.vue'
 
@@ -13,8 +14,8 @@ const props = withDefaults(
     checkedValue?: number | string | true
     type?: SwitchType
     label?: string
-    state?: ComponentState
-    mode?: 'big'
+    state?: SwitchState
+    mode?: SwitchMode
     icons?: [SpriteName, SpriteName]
     checked?: boolean
     multiple?: boolean
@@ -31,21 +32,7 @@ const emit = defineEmits<{
   (e: 'update:modelValue', value?: SwitchValue): void
 }>()
 
-const _value = ref<SwitchValue | undefined>()
-
-const localValue = computed<SwitchValue | undefined>({
-  get() {
-    return typeof props.modelValue == 'undefined' ? _value.value : props.modelValue
-  },
-
-  set(value?: SwitchValue) {
-    emit('update:modelValue', value)
-
-    if (typeof props.modelValue === 'undefined') {
-      _value.value = value
-    }
-  },
-})
+const localValue = useLocalValue<SwitchValue>(props, { onUpdateProp: (value) => emit('update:modelValue', value) })
 
 const isChecked = computed<boolean>(() => {
   if (props.multiple && props.checkedValue !== true) {
@@ -61,11 +48,8 @@ const correctIcon = computed<SpriteName | null>(() => {
   return icons?.length ? icons[isChecked.value ? 1 : 0] : null
 })
 
-const options = computed<ComponentOptions>(() => {
-  return getComponentOptions('switcher', {
-    state: props.state,
-    modes: props.mode,
-  })
+const detail = computed(() => {
+  return getComponentDetail('switcher', { state: props.state, mode: props.mode })
 })
 
 const handleValueChange = (event: InputEvent): void => {
@@ -81,15 +65,15 @@ const handleValueChange = (event: InputEvent): void => {
 </script>
 
 <template>
-  <label :class="['switcher', `switcher--${type}`, { 'switcher--checked': isChecked }, options.classes]">
+  <label :class="['switcher', `switcher--${type}`, { 'switcher--checked': isChecked }, detail.classes]">
     <input
       :value="checkedValue"
       class="switcher__input visually-hidden"
       :type="TYPE_MAP[type]"
       :checked="isChecked"
       :tabindex="presentation ? -1 : undefined"
-      :disabled="options.isDisabled"
-      :readonly="options.isReadonly"
+      :disabled="detail.disabled"
+      :readonly="detail.readonly"
       @change="handleValueChange"
     />
     <span class="switcher__wrapper">
@@ -265,6 +249,10 @@ const handleValueChange = (event: InputEvent): void => {
 
   &--tab {
     margin: 0;
+
+    &#{$self}--disabled {
+      opacity: 0.25;
+    }
 
     #{$self} {
       &__wrapper {

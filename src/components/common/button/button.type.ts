@@ -1,13 +1,16 @@
-import { ComponentOptions } from '@/utils/componentOptions'
+import { DefaultOrEmptyValue, DisabledState, ReadonlyState } from '@/type/state'
 
-export type ButtonMode = 'default' | 'primary' | 'secondary' | 'icon'
+export type ButtonMode = DefaultOrEmptyValue | 'primary' | 'secondary' | 'icon'
+export type ButtonState = DefaultOrEmptyValue | DisabledState | ReadonlyState
 
 export type ButtonIconMode = 'prepend' | 'moves'
 
-export type ButtonIcons = {
+export type ButtonType = 'button' | 'submit' | 'reset'
+
+export type ButtonTag = 'button' | 'div' | 'a' | 'routerLink'
+
+export type ButtonIcon = {
   name: string
   size?: string | number
-  modes?: ButtonIconMode[] | ButtonIconMode
+  mode?: ButtonIconMode | ButtonIconMode[]
 }
-
-export type ButtonOptions = ComponentOptions & { icon?: Omit<ButtonIcons, 'modes'> & { classes?: string[] } }

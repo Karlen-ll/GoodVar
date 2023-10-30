@@ -8,6 +8,8 @@ import { SwitchState, SwitchType, SwitchValue, SwitchMode } from '@atom/switcher
 import { SpriteName } from '@atom/icon/icon.type'
 import VIcon from '@atom/icon/VIcon.vue'
 
+// Experimental component. (Don't right way 😊)
+
 const props = withDefaults(
   defineProps<{
     modelValue?: SwitchValue

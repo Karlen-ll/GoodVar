@@ -10,37 +10,6 @@ export const toggleArrayElement = <T extends string | number>(array: T[], value:
   return array
 }
 
-function removeTrailingSpace(value: string) {
-  for (let i = value.length - 1; i >= 0; i--) {
-    if (value.charAt(i).search(/\S/) !== -1) {
-      value = value.substring(0, i + 1)
-      break
-    }
-  }
-
-  return value
-}
-
-function removeExtraSpaces(str: string) {
-  const words = str.split(/\s+/)
-  let returnStr = ''
-
-  for (let i = 0; i < words.length; i++) {
-    if (words[i] !== '') {
-      returnStr += words[i]
-
-      if (i !== words.length - 1) {
-        returnStr += ' '
-      }
-    }
-  }
-  return removeTrailingSpace(returnStr)
-}
-
-export const capitalize = (string: string) => {
-  return string.charAt(0).toUpperCase() + string.slice(1)
-}
-
 /**
  * @desc Word declension
  * @example

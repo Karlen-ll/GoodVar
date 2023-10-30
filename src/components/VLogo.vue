@@ -7,7 +7,7 @@ import { routeNames } from '@/router/routes'
   <router-link :to="{ name: routeNames.HOME }" class="logo" aria-label="Go home">
     <logo-svg class="logo__icon" width="48" height="48" aria-hidden="true" />
 
-    <span class="logo__title">Meta builder</span>
+    <span class="logo__title">SERP builder</span>
   </router-link>
 </template>
 

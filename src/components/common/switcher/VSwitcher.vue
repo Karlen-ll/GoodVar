@@ -120,7 +120,10 @@ const handleValueChange = (event: InputEvent): void => {
     justify-content: center;
     border-radius: inherit;
     text-align: center;
-    transition: transform $timeout-md, background-color $timeout-md, color $timeout-md;
+    transition:
+      transform $timeout-md,
+      background-color $timeout-md,
+      color $timeout-md;
   }
 
   &__icon {
@@ -209,7 +212,10 @@ const handleValueChange = (event: InputEvent): void => {
         height: inherit;
         color: $color--black;
         background-color: $color--white;
-        transition: transform $timeout-md, background-color $timeout-md, color $timeout-md;
+        transition:
+          transform $timeout-md,
+          background-color $timeout-md,
+          color $timeout-md;
 
         > #{$self}__icon {
           width: 0.6em;

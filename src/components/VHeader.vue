@@ -20,7 +20,9 @@ const MENU_ITEMS = [{ title: 'Generator', path: { name: routeNames.GENERATOR } }
   align-items: center;
   color: $color--font-85;
   justify-content: space-between;
-  transition: border-color 0.5s, color 0.5s;
+  transition:
+    border-color 0.5s,
+    color 0.5s;
   border-bottom: 1px solid $color--border;
   padding: 0.74em 2em;
 

@@ -133,7 +133,9 @@ const handleRemove = (index: number) => {
 .button-slide {
   &-enter-active,
   &-leave-active {
-    transition: opacity $timeout-lg ease, transform $timeout-lg ease;
+    transition:
+      opacity $timeout-lg ease,
+      transform $timeout-lg ease;
   }
 
   &-enter-from,

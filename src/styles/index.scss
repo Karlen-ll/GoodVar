@@ -208,11 +208,15 @@ a {
 
   // Vue animations
   &-enter-active {
-    transition: opacity $timeout-lg ease, transform $timeout-lg ease;
+    transition:
+      opacity $timeout-lg ease,
+      transform $timeout-lg ease;
   }
 
   &-leave-active {
-    transition: opacity $timeout-md ease, transform $timeout-md ease;
+    transition:
+      opacity $timeout-md ease,
+      transform $timeout-md ease;
   }
 
   &-enter-from,

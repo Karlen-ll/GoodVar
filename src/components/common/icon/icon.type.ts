@@ -17,7 +17,7 @@ const ICON_NAMES = [
   'square-x',
 ] as const
 
-export type SpriteName = typeof ICON_NAMES[number]
+export type SpriteName = (typeof ICON_NAMES)[number]
 
 export type IconType = {
   name: SpriteName
